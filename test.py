@@ -1,8 +1,8 @@
-''' Send the position and rotation to the xArm'''
-
 # Author: Tsugumi Sato
 
+from tkinter import E
 from turtle import position
+import numpy as np
 
 
 if __name__ == '__main__':
@@ -30,14 +30,42 @@ class Boy:
     def print(self):
         print('{}君:{}生まれ'.format(self.name,self.place_of_birth))
 
+    def print2(self):
+        print(self.name)
+
 boy1 = Boy('tsugumi','aichi')
 boy2 = Boy('wataru','tokyo')
 
 boy1.print()
+boy2.print2()
 
+def max(a,b,c):
+    ''''3つの値の最大値を求めて返却'''
+    max = a
+    if b > max: max = b
+    if c > max: max = c
+    return max
 
-import numpy as np
+print(max(6,2,4))
 
-A = np.ndarray([1,2,3,4],[5,6,7,8])
+def max2(a,b):
+    '''aとbの最大値を求めて返却'''
+    if a > b:
+        return a
+    return b
 
-print(A)
+print(max2(4,1))
+
+flag = True
+
+if flag:
+    print('true')
+
+else:
+     print('false')
+
+x = [n for n in range(1,8)]
+print(x)
+
+y = [n for n in range(1,8) if n%2 == 0]
+print(y)
