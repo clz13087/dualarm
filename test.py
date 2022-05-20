@@ -69,3 +69,11 @@ print(x)
 
 y = [n for n in range(1,8) if n%2 == 0]
 print(y)
+
+
+z = [[1,2,3,],[4,5,6,]]
+
+print(z[0])
+print(z[1])
+print(z[1][2])
+
