@@ -13,14 +13,13 @@ data = [addr for addr in dat if 'data' in addr[0]][0][1]
 
 # ----- dict型に変換 ----- #
 ALLdata = dict(participantNum1 = ParticipantNum1, participantNum2 = ParticipantNum2, participantNum3 = ParticipantNum3,)
-PN = dict(P1 = [],P2 = [], P3 = []) 
+PN = dict(P1 = [], P2 = [], P3 = []) 
 
 # ----- PNにリストとして入れ込む ----- #
 for i in range(3):
     for j in range(int(data)):
         a = ALLdata['participantNum'+str(i+1)]
-        b = int(a[0][j+1])
-        PN['P'+str(i+1)].append(b)
+        PN['P'+str(i+1)].append(int(a[0][j+1]))
 
 # ----- 測定したデータの平均値 ----- #
 participantNum_1_average = np.average(np.array(PN['P1']))
