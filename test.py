@@ -133,6 +133,7 @@ pN = participantNum
 weightSliderList = []
 weightSliderList_0 = [1/pN for n in range(pN)]
 weightSliderList = [weightSliderList_0,weightSliderList_0]
+# print(type(weightSliderList))
 
 print(weightSliderList)
 print(type(weightSliderList))
@@ -144,3 +145,5 @@ print(s)
 list = [n for n in range(7) if n%2 == 0 ]
 print(list, end = ' ')
 
+a = dict(k1 = 1, k2 = 2, k3 = 3)
+print(a['k2'])
