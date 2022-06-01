@@ -147,3 +147,14 @@ print(list, end = ' ')
 
 a = dict(k1 = 1, k2 = 2, k3 = 3)
 print(a['k2'])
+
+sum = 0
+while True:
+    n = int(input('整数値：'))
+    if n == -0:
+        break
+    if n <= 0:
+        continue
+    sum += n
+
+print('正の整数の合計は',sum,'です。')
