@@ -17,7 +17,7 @@ heightmax = [addr for addr in dat if 'heightmax' in addr[0]][0][1]
 heightmin = [addr for addr in dat if 'heightmin' in addr[0]][0][1]
 title = [addr for addr in dat if 'title' in addr[0]][0][1]
 
-number = int(leftmax) - int(leftmin) + 1
+number = int(leftmax) - int(leftmin) + int(width)
 a = int(leftmin)
 height = []
 
@@ -26,10 +26,11 @@ while a <= number:
     b = str(a)
     count = leftdata[0].count(b)
     height.append(count)
-    a += 1
+    a += int(width)
 
+# ----- leftを文字列に変換 ----- #
 left = list(range(int(leftmin),int(leftmax)+1,int(width)))
-left = ['1','2','3','4','5','6','7','8','9','10']
+left = list(map(str,left))
 
 # ----- グラフ作成 ----- #
 plt.bar(left, height, width = 1)

@@ -1,9 +1,10 @@
-leftdata,1,3,4,6,7,10,3,5,2,3,5,6,10
+# ----- 任意の値を入力 ----- #
+leftdata,10,20,30,30,40,40,40,80,80,80,50,60,60,70,90,20,30,40,30,40,10,20,40,40,40
 participantNum,13
-leftmax,10
-leftmin,1
-width,1
-heightmax,5
+leftmax,100
+leftmin,10
+width,10
+heightmax,8
 heightmin,0
 title,title
 xlabel,senseofagency
