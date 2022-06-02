@@ -80,9 +80,8 @@ print(z[1][2])
 
 
 
-# fileIO = FileIO()
-
-# dat = fileIO.Read('test.csv',',')
+fileIO = FileIO()
+dat = fileIO.Read('test.csv',',')
 
 # xArmIP1 = [addr for addr in dat if 'xArmIP1' in addr[0]][0][1]
 # xArmIP2 = [addr for addr in dat if 'xArmIP2' in addr[0]][0][1]
@@ -128,33 +127,70 @@ roles = ['p1','p2','p3','p4']
 
 print(pos[roles[0]],pos[roles[3]])
 
-participantNum = 3
-pN = participantNum
-weightSliderList = []
-weightSliderList_0 = [1/pN for n in range(pN)]
-weightSliderList = [weightSliderList_0,weightSliderList_0]
+# participantNum = 3
+# pN = participantNum
+# weightSliderList = []
+# weightSliderList_0 = [1/pN for n in range(pN)]
+# weightSliderList = [weightSliderList_0,weightSliderList_0]
+# # print(type(weightSliderList))
+
+# print(weightSliderList)
 # print(type(weightSliderList))
 
-print(weightSliderList)
-print(type(weightSliderList))
+# s = np.array([[1,2,3],[4,5,6]])
 
-s = np.array([[1,2,3],[4,5,6]])
+# print(s)
 
-print(s)
+# list = [n for n in range(7) if n%2 == 0 ]
+# print(list, end = ' ')
 
-list = [n for n in range(7) if n%2 == 0 ]
-print(list, end = ' ')
+# a = dict(k1 = 1, k2 = 2, k3 = 3)
+# print(a['k2'])
 
-a = dict(k1 = 1, k2 = 2, k3 = 3)
-print(a['k2'])
+# sum = 0
+# while True:
+#     n = int(input('整数値：'))
+#     if n == -0:
+#         break
+#     if n <= 0:
+#         continue
+#     sum += n
 
-sum = 0
-while True:
-    n = int(input('整数値：'))
-    if n == -0:
-        break
-    if n <= 0:
-        continue
-    sum += n
+# print('正の整数の合計は',sum,'です。')
 
-print('正の整数の合計は',sum,'です。')
+# weightSliderList = [ addr for addr in dat if 'weightSliderListPos' in addr[0]]
+# # print(weightSliderList[0])
+
+# weightSliderList[0].remove('weightSliderListPos')
+# print(weightSliderList)
+
+# list3 = weightSliderList[0]
+# print(list)
+
+# list2 = list(map(float,list3))
+# print(list2)
+
+weightSliderListPos = [ addr for addr in dat if 'weightSliderListPos' in addr[0]]
+weightSliderListRot = [ addr for addr in dat if 'weightSliderListRot' in addr[0]]
+
+
+# self.weightSliderListPos[0].remove('weightSliderListPos')
+# self.weightSliderListRot[0].remove('weightSliderListRot')
+# weightSliderListPosstr = self.weightSliderListPos[0]
+# weightSliderListRotstr = self.weightSliderListRot[0]
+# weightSliderListPosfloat = list(map(float,weightSliderListPosstr))
+# weightSliderListRotfloat = list(map(float,weightSliderListRotstr))
+# weightSliderList = [weightSliderListPosfloat,weightSliderListRotfloat]
+
+
+
+x = ['1','2','3','4']
+y = list(map(int,x))
+print(y)
+
+z = list(map(str,y))
+print(z)
+
+print(weightSliderListPos)
+weightSliderListPos[0].remove('weightSliderListPos')
+print(weightSliderListPos[0])
