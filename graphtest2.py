@@ -7,7 +7,6 @@ from FileIO import FileIO
 fileIO = FileIO()
 dat = fileIO.Read('graphtest2.csv',',')
 leftdata = [addr for addr in dat if 'leftdata' in addr[0]]
-participantNum = [addr for addr in dat if 'participantNum' in addr[0]][0][1]
 xlabel = [addr for addr in dat if 'xlabel' in addr[0]][0][1]
 ylabel = [addr for addr in dat if 'ylabel' in addr[0]][0][1]
 width = [addr for addr in dat if 'width' in addr[0]][0][1]
