@@ -1,9 +1,11 @@
 # Author: Tsugumi Sato
 
+from configparser import InterpolationMissingOptionError
 from tkinter import E
 from turtle import pos, position
 import numpy as np
 from FileIO import FileIO
+import pprint
 
 
 if __name__ == '__main__':
@@ -174,13 +176,27 @@ weightSliderListPos = [ addr for addr in dat if 'weightSliderListPos' in addr[0]
 weightSliderListRot = [ addr for addr in dat if 'weightSliderListRot' in addr[0]]
 
 
-# self.weightSliderListPos[0].remove('weightSliderListPos')
-# self.weightSliderListRot[0].remove('weightSliderListRot')
-# weightSliderListPosstr = self.weightSliderListPos[0]
-# weightSliderListRotstr = self.weightSliderListRot[0]
-# weightSliderListPosfloat = list(map(float,weightSliderListPosstr))
-# weightSliderListRotfloat = list(map(float,weightSliderListRotstr))
-# weightSliderList = [weightSliderListPosfloat,weightSliderListRotfloat]
+participantNum = 4
+weightSliderListPos[0].remove('weightSliderListPos')
+weightSliderListRot[0].remove('weightSliderListRot')
+weightSliderListPosstr = weightSliderListPos[0]
+weightSliderListRotstr = weightSliderListRot[0]
+weightSliderListPosfloat = list(map(float,weightSliderListPosstr))
+weightSliderListRotfloat = list(map(float,weightSliderListRotstr))
+weightSliderList = [weightSliderListPosfloat,weightSliderListRotfloat]
+posrot = ['pos','rot']
+participantNumList = np.arange(participantNum)
+participantNumList+= 1
+participantNumList = list(map(str,participantNumList))
+weightSliderDict = dict()
+for i in range(participantNum):
+    for j in range(2):
+        weightSliderDict['p'+participantNumList[i]+posrot[j]] = weightSliderList[j][i]
+pprint.pprint(weightSliderDict)
+
+
+
+
 
 
 
@@ -191,6 +207,47 @@ print(y)
 z = list(map(str,y))
 print(z)
 
-print(weightSliderListPos)
-weightSliderListPos[0].remove('weightSliderListPos')
-print(weightSliderListPos[0])
+# print(weightSliderListPos)
+# weightSliderListPos[0].remove('weightSliderListPos')
+# print(weightSliderListPos[0])
+
+
+
+
+result = np.zeros([2,2])
+a = np.array([[1,2],[3,4]])
+b = np.array([[4,3],[2,1]])
+print(a)
+np.matmul(a,b,result)
+print(result)
+
+# a = np.array([1,2])
+# b = np.array([3,4])
+# print(np.dot(a,b))
+
+a = np.linalg.inv(a)
+print(a)
+
+print(np.arange(3,10,2,dtype=float))
+print(np.linspace(1,10,4))
+print(np.linspace(1,9,4,endpoint=False,dtype=int))
+
+a = np.array([[1,2,3],[4,5,6]])
+print(a)
+
+a = np.arange(12)
+b = a.reshape(3,4)
+print(b)
+print(np.reshape(a,[2,6]))
+
+# print(dir('a'))
+# print(dir(['a','b']))
+# print(dir(np.array([1,2])))
+
+print(weightSliderList)
+pprint.pprint(weightSliderDict)
+print(weightSliderDict)
+
+a = [1,2,3,4,5,6]
+
+print(a[0:3])
