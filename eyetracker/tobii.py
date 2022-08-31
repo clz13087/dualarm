@@ -1,4 +1,10 @@
-import tobii_research as tr
+# ----------------------------------------------------------------------- 
+# Author:   Tsugumi Sato (NIT)
+# Created:  2022/8/30
+# Summary:  視線、
+# -----------------------------------------------------------------------
+
+import tobiiresearch as tr
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
@@ -31,4 +37,3 @@ def get_screen_information():
         s_height = s_info.height
     print("screen information: ",s_info)
 
-    

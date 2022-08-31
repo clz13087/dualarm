@@ -4,7 +4,7 @@
 # Summary:  calibration
 # -----------------------------------------------------------------------
 
-import tobii_research as tr
+import tobiiresearch as tr
 import time
 import cv2
 import sys
