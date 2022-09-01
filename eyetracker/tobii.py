@@ -11,6 +11,56 @@ import matplotlib.patches as patches
 import screeninfo
 from FileIO.FileIO import FileIO
 
+class Tobii:
+    def __init__(self, robotspace: float, taskspace: float, sideweight: float, centerweight: float) -> None:
+        # ----- read parameters from setting.csv ----- #
+        # fileIO = FileIO()
+        # dat = fileIO.Read('settings.csv', ',')
+        # ----- ここはrobotcontrolmanagerclassに追加 ----- #
+        # robotspace = [addr for addr in dat if 'robotspace' in addr[0]][0][1]
+        # taskspace = [addr for addr in dat if 'taskspace' in addr[0]][0][1]
+        # sideweight = [addr for addr in dat if 'sideweight' in addr[0]][0][1]
+        # centerweight = [addr for addr in dat if 'centerweight' in addr[0]][0][1]
+        self.robotspace = robotspace
+        self.taskspace = taskspace
+        self.sideweight = sideweight
+        self.centerweight = centerweight
+
+    def eyedata2weight(self, robotspace: float, taskspace: float, sideweight: float, centerweight: float):
+        """
+        eyedata2weight
+        """
+        # ----- find eyetracker ----- #
+        found_eyetrackers = tr.find_all_eyetrackers()
+        my_eyetracker = found_eyetrackers[0]
+        eye(my_eyetracker)
+
+        # ----- l: left, r: right, cl: center left, cr: center right ----- #
+        l = robotspace
+        r = 1 - robotspace
+        cl = (1 - taskspace)/2
+        cr = (1 + taskspace)/2
+        weightlist = []
+
+        # ----- change weight according to eye_x ----- #
+        if eye_x < l:
+            weightlist = [sideweight, 1]
+        elif eye_x >= l and eye_x < cl:
+            weightslider = ((eye_x - l)/(centerweight - sideweight))*(cl - l) +l
+            weightlist = [weightslider, weightslider]
+        elif eye_x >= cl and eye_x <= cr:
+            weightlist = [centerweight, centerweight]
+        elif eye_x > cr and eye_x <= r:
+            weightslider = ((eye_x - cr)/(sideweight - centerweight))*(r - cr) + cr
+            weightlist = [weightslider, weightslider]
+        elif eye_x > r:
+            weightlist = [1, sideweight]
+        else:
+            weightlist = [sideweight, sideweight]
+
+        print('weightlist:',weightlist)
+        return weightlist
+
 def gaze_data_callback(gaze_data):
     global eye_x, eye_y
 
@@ -42,45 +92,3 @@ def get_screen_information():
     print("screen information: ",s_info)
 
     return s_width, s_height
-
-def eyedata2weight():
-    """
-    eyedata2weight
-    """
-    # ----- find eyetracker ----- #
-    found_eyetrackers = tr.find_all_eyetrackers()
-    my_eyetracker = found_eyetrackers[0]
-    eye(my_eyetracker)
-
-    # ----- read parameters from setting.csv ----- #
-    fileIO = FileIO()
-    dat = fileIO.Read('settings.csv', ',')
-    robotspace = [addr for addr in dat if 'robotspace' in addr[0]][0][1]
-    taskspace = [addr for addr in dat if 'taskspace' in addr[0]][0][1]
-    sideweight = [addr for addr in dat if 'sideweight' in addr[0]][0][1]
-    centerweight = [addr for addr in dat if 'centerweight' in addr[0]][0][1]
-
-    # ----- l: left, r: right, cl: center left, cr: center right ----- #
-    l = robotspace
-    r = 1 - robotspace
-    cl = (1 - taskspace)/2
-    cr = (1 + taskspace)/2
-    weightlist = []
-
-    # ----- change weight according to eye_x ----- #
-    if eye_x < l:
-        weightlist = [sideweight, 1]
-    elif eye_x >= l and eye_x < cl:
-        weightslider = ((eye_x - l)/(centerweight - sideweight))*(cl - l) +l
-        weightlist = [weightslider, weightslider]
-    elif eye_x >= cl and eye_x <= cr:
-        weightlist = [centerweight, centerweight]
-    elif eye_x > cr and eye_x <= r:
-        weightslider = ((eye_x - cr)/(sideweight - centerweight))*(r - cr) + cr
-        weightlist = [weightslider, weightslider]
-    elif eye_x > r:
-        weightlist = [1, sideweight]
-    else:
-        weightlist = [sideweight, sideweight]
-
-    return weightlist
