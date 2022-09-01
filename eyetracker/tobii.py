@@ -26,7 +26,7 @@ class Tobii:
         self.sideweight = sideweight
         self.centerweight = centerweight
 
-    def eyedata2weight(self, robotspace: float, taskspace: float, sideweight: float, centerweight: float):
+    def eyedata2weight(self):
         """
         eyedata2weight
         """
@@ -36,27 +36,27 @@ class Tobii:
         eye(my_eyetracker)
 
         # ----- l: left, r: right, cl: center left, cr: center right ----- #
-        l = robotspace
-        r = 1 - robotspace
-        cl = (1 - taskspace)/2
-        cr = (1 + taskspace)/2
+        l = self.robotspace
+        r = 1 - self.robotspace
+        cl = (1 - self.taskspace)/2
+        cr = (1 + self.taskspace)/2
         weightlist = []
 
         # ----- change weight according to eye_x ----- #
         if eye_x < l:
-            weightlist = [sideweight, 1]
+            weightlist = [self.sideweight, 1]
         elif eye_x >= l and eye_x < cl:
-            weightslider = ((eye_x - l)/(centerweight - sideweight))*(cl - l) +l
+            weightslider = ((eye_x - l)/(self.centerweight - self.sideweight))*(cl - l) +l
             weightlist = [weightslider, weightslider]
         elif eye_x >= cl and eye_x <= cr:
-            weightlist = [centerweight, centerweight]
+            weightlist = [self.centerweight, self.centerweight]
         elif eye_x > cr and eye_x <= r:
-            weightslider = ((eye_x - cr)/(sideweight - centerweight))*(r - cr) + cr
+            weightslider = ((eye_x - cr)/(self.sideweight - self.centerweight))*(r - cr) + cr
             weightlist = [weightslider, weightslider]
         elif eye_x > r:
-            weightlist = [1, sideweight]
+            weightlist = [1, self.sideweight]
         else:
-            weightlist = [sideweight, sideweight]
+            weightlist = [self.sideweight, self.sideweight]
 
         print('weightlist:',weightlist)
         return weightlist
