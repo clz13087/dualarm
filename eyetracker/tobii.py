@@ -57,6 +57,8 @@ class Tobii:
             weightlist = [1, self.sideweight]
         else:
             weightlist = [self.sideweight, self.sideweight]
+        
+        weightlist = weightlist.reshape(len(weightlist),1)
 
         print('weightlist:',weightlist)
         return weightlist
