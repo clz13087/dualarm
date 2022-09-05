@@ -4,12 +4,14 @@
 # Summary:  tobii全般
 # -----------------------------------------------------------------------
 
+from re import L
 import tobiiresearch as tr
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 import screeninfo
 from FileIO.FileIO import FileIO
+import cv2
 
 class Tobii:
     def __init__(self, robotspace: float, taskspace: float, sideweight: float, centerweight: float) -> None:
@@ -36,30 +38,74 @@ class Tobii:
         eye(my_eyetracker)
 
         # ----- l: left, r: right, cl: center left, cr: center right ----- #
-        l = self.robotspace
-        r = 1 - self.robotspace
-        cl = (1 - self.taskspace)/2
-        cr = (1 + self.taskspace)/2
+        self.l = self.robotspace
+        self.r = 1 - self.robotspace
+        self.cl = (1 - self.taskspace)/2
+        self.cr = (1 + self.taskspace)/2
         weightlist = []
 
         # ----- change weight according to eye_x ----- #
-        if eye_x < l:
+        if eye_x < self.l:
             weightlist = [self.sideweight, 1]
-        elif eye_x >= l and eye_x < cl:
-            weightslider = ((eye_x - l)/(self.centerweight - self.sideweight))*(cl - l) +l
+        elif eye_x >= self.l and eye_x < self.cl:
+            weightslider = ((eye_x - self.l)/(self.centerweight - self.sideweight))*(self.cl - self.l) + self.l
             weightlist = [weightslider, weightslider]
-        elif eye_x >= cl and eye_x <= cr:
+        elif eye_x >= self.cl and eye_x <= self.cr:
             weightlist = [self.centerweight, self.centerweight]
-        elif eye_x > cr and eye_x <= r:
-            weightslider = ((eye_x - cr)/(self.sideweight - self.centerweight))*(r - cr) + cr
+        elif eye_x > self.cr and eye_x <= self.r:
+            weightslider = ((eye_x - self.cr)/(self.sideweight - self.centerweight))*(self.r - self.cr) + self.cr
             weightlist = [weightslider, weightslider]
-        elif eye_x > r:
+        elif eye_x > self.r:
             weightlist = [1, self.sideweight]
         else:
             weightlist = [self.sideweight, self.sideweight]
 
         print('weightlist:',weightlist)
         return weightlist
+
+    def camera(self):
+        """
+        display camera image & weight lines
+        """
+        # ----- connect camera ----- #
+        cap = cv2.VideoCapture(0)
+
+        # ----- get camera info ----- #
+        width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+        height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+
+        # ----- set weight lines ----- #
+        line1_x = self.l * width
+        line2_x = self.cl * width
+        line3_x = self.cr * width
+        line4_x = self.r * width
+        line_y = height
+
+        # ----- get data ----- #
+        ret,frame = cap.read()
+
+        # ----- for failure ----- #
+        if ret == False:
+            print('画像取得できませんでした')
+        
+        # ----- display lines ----- #
+        cv2.line(frame, pt1=(int(line1_x), 0), pt2=(int(line1_x), line_y), color=(0,0,255),thickness= 4)
+        cv2.line(frame, pt1=(int(line2_x), 0), pt2=(int(line2_x), line_y), color=(0,255,0),thickness= 4)
+        cv2.line(frame, pt1=(int(line3_x), 0), pt2=(int(line3_x), line_y), color=(0,255,0),thickness= 4)
+        cv2.line(frame, pt1=(int(line4_x), 0), pt2=(int(line4_x), line_y), color=(0,0,255),thickness= 4)
+
+        # ----- display camera image ----- #
+        gray = cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)   #取得した画像のグレースケール画像を取得する
+        cv2.imshow('f',frame)       #リアルタイムに取得した生画像を表示
+        # cv2.imshow('g',gray)        #生画像をグレースケールにした画像を表示
+
+        # ----- push q to end getting data ----- #
+        # if cv2.waitKey(1) & 0xFF == ord('q'):
+        #     break
+
+        # ----- disconnect and destroy window----- #
+        # cap.release()
+        # cv2.destroyAllWindows()
 
 def gaze_data_callback(gaze_data):
     global eye_x, eye_y

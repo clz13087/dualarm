@@ -46,8 +46,8 @@ while(True):
     cl = (1 - taskspace)/2
     cr = (1 + taskspace)/2
 
-    s_width = 1920
-    s_height = 1080
+    s_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+    s_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
 
     line1_x = l * s_width
     line2_x = cl * s_width
