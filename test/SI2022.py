@@ -46,7 +46,7 @@ average_OP2_2 = np.average(np.array(OP3list))
 average_OP3 = np.average(np.array(OP4list))
 
 # ----- 標準偏差 ----- #
-y_err = [stdev(OP1list),stdev(OP2list),stdev(OP3list),stdev(OP4list)]
+y_err = [stdev(OP1list), stdev(OP2list), stdev(OP3list), stdev(OP4list)]
 
 # ----- データプロット ----- #
 left = ['1', '2人(別々)','2人(融合)', '3']
