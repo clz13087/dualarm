@@ -30,5 +30,3 @@ class FileIO:
                 data = [l.split(lineDelimiter) for l in data]
         
         return data
-
-
