@@ -7,7 +7,7 @@ from FileIO import FileIO
 
 # ----- csvからデータを取得 ----- #
 fileIO = FileIO()
-dat = fileIO.Read('SI2022.csv', ',')
+dat = fileIO.Read('SI2022主体感.csv', ',')
 # dat = fileIO.Read('SI2022所有感.csv', ',')
 # dat = fileIO.Read('SI2022操作感.csv', ',')
 # dat = fileIO.Read('SI2022連帯感.csv', ',')
