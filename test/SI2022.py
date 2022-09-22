@@ -8,6 +8,11 @@ from FileIO import FileIO
 # ----- csvからデータを取得 ----- #
 fileIO = FileIO()
 dat = fileIO.Read('SI2022.csv', ',')
+# dat = fileIO.Read('SI2022所有感.csv', ',')
+# dat = fileIO.Read('SI2022操作感.csv', ',')
+# dat = fileIO.Read('SI2022連帯感.csv', ',')
+# dat = fileIO.Read('SI2022tasktime.csv', ',')
+# dat = fileIO.Read('SI2022NASATLX.csv', ',')
 OP1 = [addr for addr in dat if 'OP1' in addr[0]]
 OP2 = [addr for addr in dat if 'OP2_1' in addr[0]]
 OP3 = [addr for addr in dat if 'OP2_2' in addr[0]]
