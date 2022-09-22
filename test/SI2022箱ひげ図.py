@@ -51,10 +51,11 @@ OP4list = list(map(float,OP4str))
 
 # ----- 箱ひげ図 ----- #
 fig, ax = plt.subplots()
-left = ['1', '2人(別々)','2人(融合)', '3']
+left = ['1', '2(separate)','2(integration)', '3']
 height = [OP1list, OP2list, OP3list, OP4list]
 
 bp=ax.boxplot(height,
+              labels = left,  #条件
               vert=True,  # 縦向きにする
               patch_artist=True,  # 細かい設定をできるようにする
               widths=0.7,  # boxの幅の設定
@@ -77,4 +78,5 @@ for b, c in zip(bp['boxes'], colors):
 # ----- 縦横ラベル ----- #
 plt.xlabel('Condition')
 plt.ylabel(ylabel)
+plt.setp(ax.get_xticklabels(), rotation=0) #labelsが重なった時角度変更
 plt.show()
