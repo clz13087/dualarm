@@ -8,8 +8,11 @@ import seaborn as sns
 
 # ----- csvからデータを取得 ----- #
 fileIO = FileIO()
-dat = fileIO.Read('senseofagency_点プロット.csv', ',')
-# dat = fileIO.Read('senseofownership_点プロット.csv', ',')
+# dat = fileIO.Read('yobi/senseofagency_点プロット.csv', ',')
+# dat = fileIO.Read('yobi/senseofownership_点プロット.csv', ',')
+# dat = fileIO.Read('yobi/操作性_点プロット.csv', ',')
+# dat = fileIO.Read('yobi/support_点プロット.csv', ',')
+dat = fileIO.Read('yobi/tasktime_点プロット.csv', ',')
 
 ylabel = [addr for addr in dat if 'ylabel' in addr[0]][0][1]
 OP1 = [addr for addr in dat if 'OP1' in addr[0]]
@@ -44,6 +47,10 @@ OP3list = list(map(float,OP3[0]))
 height1 = [OP1list[0],OP2list[0],OP3list[0]]
 height2 = [OP1list[1],OP2list[1],OP3list[1]]
 height3 = [OP1list[2],OP2list[2],OP3list[2]]
+height4 = [OP1list[3],OP2list[3],OP3list[3]]
+height5 = [OP1list[4],OP2list[4],OP3list[4]]
+height6 = [OP1list[5],OP2list[5],OP3list[5]]
+height7 = [OP1list[6],OP2list[6],OP3list[6]]
 left = ['1', '2', '3']
 
 # ----- 縦横ラベル ----- #
@@ -51,9 +58,13 @@ fig, ax = plt.subplots()
 ax.scatter(left, height1, color = "k")
 ax.scatter(left, height2, color = "k")
 ax.scatter(left, height3, color = "k")
+ax.scatter(left, height4, color = "k")
+ax.scatter(left, height5, color = "k")
+ax.scatter(left, height6, color = "k")
+ax.scatter(left, height7, color = "k")
 plt.xlabel('Condition')
 plt.ylabel(ylabel)
 # plt.setp(ax.get_xticklabels(), rotation=0) #labelsが重なった時角度変更
 # sns.swarmplot(y = height, color="r")
-plt.ylim(0,100)
+plt.ylim(0,55)
 plt.show()
