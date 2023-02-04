@@ -7,11 +7,27 @@ from FileIO import FileIO
 
 # ----- csvからデータを取得 ----- #
 fileIO = FileIO()
-# dat = fileIO.Read('卒論主体感.csv', ',')
-# dat = fileIO.Read('卒論tasktime.csv', ',')
+# dat = fileIO.Read('主体感絶対.csv', ',')
+# dat = fileIO.Read('主体感相対.csv', ',')
+
+# dat = fileIO.Read('tasktime絶対.csv', ',')
+# dat = fileIO.Read('tasktime相対.csv', ',')
+
 # dat = fileIO.Read('NASATLX絶対.csv', ',')
-dat = fileIO.Read('NASATLX相対.csv', ',')
-# dat = fileIO.Read('制御割合錯覚度合い.csv', ',')
+# dat = fileIO.Read('NASATLX相対.csv', ',')
+
+dat = fileIO.Read('所有感絶対.csv', ',')
+# dat = fileIO.Read('所有感相対.csv', ',')
+
+# dat = fileIO.Read('操作性絶対.csv', ',')
+# dat = fileIO.Read('操作性相対.csv', ',')
+
+# dat = fileIO.Read('FoC絶対.csv', ',')
+# dat = fileIO.Read('FoC相対.csv', ',')
+
+# dat = fileIO.Read('協力.csv', ',')
+
+# dat = fileIO.Read('FoC to Control Rate.csv', ',')
 
 ylabel = [addr for addr in dat if 'ylabel' in addr[0]][0][1]
 OP1 = [addr for addr in dat if 'OP1' in addr[0]]
@@ -64,5 +80,5 @@ for b, c in zip(bp['boxes'], colors):
 plt.xlabel('Condition')
 plt.ylabel(ylabel)
 plt.setp(ax.get_xticklabels(), rotation=0) #labelsが重なった時角度変更
-# plt.ylim(1,7)
+# plt.ylim(0.7,7.3)
 plt.show()
