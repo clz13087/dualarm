@@ -2,27 +2,22 @@ import pandas as pd
 import numpy as np
 import csv
 
-with open('data/src/sample.csv') as f:
-    print(f.read)
-
 class JRK:
     def __init__(self) -> None:
-        print('--- import --- : Motion Analysis Jerk')
+        pass
 
     def JRK_C(self,d):
-        print('--- calculate --- : Motion Analysis Jerk')
         self.get_data(d)
         self.jrk = self.Ahmad_2016()
-        print('jrk : ',self.jrk)
         return self.jrk    
     
     def Ahmad_2016(self):
         self.jrk_sq_list = []
-        for i in range(len(self.j_x)):
+        for i in range(len(self.v_x)):
             self.jrk_sq = self.j_x[i]**2 + self.j_y[i]**2 + self.j_z[i]**2            
             self.jrk_sq_list.append(self.jrk_sq)
         self.sum_jrk = np.sum(self.jrk_sq_list)
-        self.dt = self.tl.values[-1] - self.tl.values[0]
+        self.dt = self.tl[-4] - self.tl[0]
         self.vel_sq_list = []
         for i in range(len(self.v_x)):
             self.vel_sq = np.sqrt(self.v_x[i]**2 + self.v_y[i]**2 + self.v_z[i]**2)
@@ -39,8 +34,3 @@ class JRK:
         self.j_x = data['jx']
         self.j_y = data['jy']
         self.j_z = data['jz']
-
-
-if __name__ == '__main__':
-    jrkclass = JRK
-    jrk = jrkclass.JRK_C

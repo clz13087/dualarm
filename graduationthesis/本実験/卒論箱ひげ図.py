@@ -1,9 +1,12 @@
+from lib2to3.pgen2.token import OP
 from operator import length_hint
 from statistics import stdev
 import graph
 from matplotlib import pyplot as plt
 import numpy as np
 from FileIO import FileIO
+import matplotlib.ticker as ptick
+from matplotlib.ticker import ScalarFormatter
 
 # ----- csvからデータを取得 ----- #
 fileIO = FileIO()
@@ -16,7 +19,7 @@ fileIO = FileIO()
 # dat = fileIO.Read('NASATLX絶対.csv', ',')
 # dat = fileIO.Read('NASATLX相対.csv', ',')
 
-dat = fileIO.Read('所有感絶対.csv', ',')
+# dat = fileIO.Read('所有感絶対.csv', ',')
 # dat = fileIO.Read('所有感相対.csv', ',')
 
 # dat = fileIO.Read('操作性絶対.csv', ',')
@@ -27,7 +30,12 @@ dat = fileIO.Read('所有感絶対.csv', ',')
 
 # dat = fileIO.Read('協力.csv', ',')
 
+
 # dat = fileIO.Read('FoC to Control Rate.csv', ',')
+
+# dat = fileIO.Read('Jerk Index(left arm).csv', ',')
+# dat = fileIO.Read('Jerk Index(right arm).csv', ',')
+dat = fileIO.Read('Jerk Index(dual-arm).csv', ',')
 
 ylabel = [addr for addr in dat if 'ylabel' in addr[0]][0][1]
 OP1 = [addr for addr in dat if 'OP1' in addr[0]]
@@ -46,6 +54,9 @@ OP3str = OP3[0]
 OP1list = list(map(float,OP1str))
 OP2list = list(map(float,OP2str))
 OP3list = list(map(float,OP3str))
+# OP1list = np.log10(OP1list)
+# OP2list = np.log10(OP2list)
+# OP3list = np.log10(OP3list)
 
 # ----- 箱ひげ図 ----- #
 fig, ax = plt.subplots()
@@ -80,5 +91,7 @@ for b, c in zip(bp['boxes'], colors):
 plt.xlabel('Condition')
 plt.ylabel(ylabel)
 plt.setp(ax.get_xticklabels(), rotation=0) #labelsが重なった時角度変更
-# plt.ylim(0.7,7.3)
+plt.ylim(0,0.50*10**14)
+
+# ax.set(ylabel=r'$log_{10}Jerk Index$')
 plt.show()
