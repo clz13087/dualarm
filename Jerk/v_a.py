@@ -84,7 +84,7 @@ JerkIndex_list_condition_3_right = []
 if __name__ == '__main__':
     for i in range(3):
         condition = '条件' + str(i+1)
-        for j in range(4):
+        for j in range(6):
             group = str(j+1) + '組目'
             for k in range(5):
                 howmanytimes = str(k+1) + '回目'
@@ -137,3 +137,13 @@ if __name__ == '__main__':
     JerkIndex_list_condition_1_dualarm = [(x + y) / 2 for x, y in zip(JerkIndex_list_condition_1_left, JerkIndex_list_condition_1_right)]
     JerkIndex_list_condition_2_dualarm = [(x + y) / 2 for x, y in zip(JerkIndex_list_condition_2_left, JerkIndex_list_condition_2_right)]
     JerkIndex_list_condition_3_dualarm = [(x + y) / 2 for x, y in zip(JerkIndex_list_condition_3_left, JerkIndex_list_condition_3_right)]
+
+    print(JerkIndex_list_condition_1_left)
+    print(JerkIndex_list_condition_2_left)
+    print(JerkIndex_list_condition_3_left)
+    print(JerkIndex_list_condition_1_right)
+    print(JerkIndex_list_condition_2_right)
+    print(JerkIndex_list_condition_3_right)
+    print(JerkIndex_list_condition_1_dualarm) 
+    print(JerkIndex_list_condition_2_dualarm)
+    print(JerkIndex_list_condition_3_dualarm)
