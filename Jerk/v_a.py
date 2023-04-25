@@ -71,7 +71,7 @@ class VAJ:
             del self.ay[-1:]
             del self.az[-1:]
 
-        self.data = dict(time=time_all_in_tasktime, vx=self.vx , vy=self.vy, vz=self.vz, jx=self.jx, jy=self.jy, jz=self.jz)
+        self.data = dict(time=time_all_in_tasktime, x=self.x_all, y=self.y_all, z=self.z_all, vx=self.vx , vy=self.vy, vz=self.vz, jx=self.jx, jy=self.jy, jz=self.jz)
         return self.data
 
 JerkIndex_list_condition_1_left = []
@@ -84,66 +84,106 @@ JerkIndex_list_condition_3_right = []
 if __name__ == '__main__':
     for i in range(3):
         condition = '条件' + str(i+1)
-        for j in range(6):
+        for j in range(4):
             group = str(j+1) + '組目'
-            for k in range(5):
-                howmanytimes = str(k+1) + '回目'
-                for l in range(2):
-                    arm = str(l+1)
-                    file = glob.glob('/Users/sanolab/this mac/大学/研究室/B4/卒論/卒論_data/data/' + condition + '/' + group +'/本番/' + howmanytimes+ '/' +'Transform_Robot_' + arm + '*')
-                    for name in file:
-                        dat = pd.read_csv(name)
-                    
-                    file_tasktime = '/Users/sanolab/this mac/大学/研究室/B4/卒論/卒論_data/data/tasktime.csv'
-                    with open(file_tasktime, 'r') as file:
-                        reader = csv.reader(file)
-                        tasktime_data = list(reader)
-                    tasktime = float(tasktime_data[6*i+j][k])+1
-                    
-                    vaj = VAJ(dat=dat, tasktime=tasktime)
-                    data = vaj.calcurate_vel_acceleration_jerk()
+            for l in range(2):
+                arm = str(l+1)
+                # file = glob.glob('/Users/sanolab/this mac/大学/研究室/B4/卒論/卒論_data/data/' + condition + '/' + group +'/本番/' + howmanytimes+ '/' +'Transform_Robot_' + arm + '*')
+                for m in range(3):
+                    person = str(m+1) + '人目'
+                    for k in range(5):
+                        howmanytimes = str(k+1) + '回目'
+                        file = glob.glob('/Users/sanolab/this mac/大学/研究室/B4/卒論/卒論_data/data/' + condition + '/' + group +'/練習/' + person + '_' + howmanytimes+ '/' +'Transform_Robot_' + arm + '*')
+                        for name in file:
+                            dat = pd.read_csv(name)
+                            # print(file)
+                        
+                            file_tasktime = '/Users/sanolab/this mac/大学/研究室/B4/卒論/卒論_data/data/tasktime.csv'
+                            with open(file_tasktime, 'r') as file:
+                                reader = csv.reader(file)
+                                tasktime_data = list(reader)
+                            tasktime = float(tasktime_data[6*i+j][k])+1
+                            
+                            vaj = VAJ(dat=dat, tasktime=tasktime)
+                            data = vaj.calcurate_vel_acceleration_jerk()
 
-                    jerk = JRK()
-                    jerkindex = jerk.JRK_C(data)
-                    
-                    # ----- 全てを順に出力 ----- #
-                    # print(condition + '_' + group + '_' + howmanytimes + '_' + arm + '_' +'jerkindex: ', format(jerkindex,'.3E'))
+                            jerk = JRK()
+                            jerkindex = jerk.JRK_C(data)
+                            
+                            # ----- 全てを順に出力 ----- #
+                            # print(condition + '_' + group + '_' + howmanytimes + '_' + arm + '_' +'jerkindex: ', format(jerkindex,'.3E'))
 
-                    # ----- 条件と左右で分けて，一個の ----- #
-                    if i == 0 and l == 0:
-                        JerkIndex_list_condition_1_left.append(format(jerkindex,'.3E'))
-                    if i == 1 and l == 0:
-                        JerkIndex_list_condition_2_left.append(format(jerkindex,'.3E'))
-                    if i == 2 and l == 0:
-                        JerkIndex_list_condition_3_left.append(format(jerkindex,'.3E'))
-                    if i == 0 and l == 1:
-                        JerkIndex_list_condition_1_right.append(format(jerkindex,'.3E'))
-                    if i == 1 and l == 1:
-                        JerkIndex_list_condition_2_right.append(format(jerkindex,'.3E'))
-                    if i == 2 and l == 1:
-                        JerkIndex_list_condition_3_right.append(format(jerkindex,'.3E'))
+                            # ----- 条件と左右で分ける ----- #
+                            if i == 0 and l == 0:
+                                JerkIndex_list_condition_1_left.append(format(jerkindex,'.3E'))
+                            if i == 1 and l == 0:
+                                JerkIndex_list_condition_2_left.append(format(jerkindex,'.3E'))
+                            if i == 2 and l == 0:
+                                JerkIndex_list_condition_3_left.append(format(jerkindex,'.3E'))
+                            if i == 0 and l == 1:
+                                JerkIndex_list_condition_1_right.append(format(jerkindex,'.3E'))
+                            if i == 1 and l == 1:
+                                JerkIndex_list_condition_2_right.append(format(jerkindex,'.3E'))
+                            if i == 2 and l == 1:
+                                JerkIndex_list_condition_3_right.append(format(jerkindex,'.3E'))
 
-    # ----- for left arm ----- # 
-    JerkIndex_list_condition_1_left = list(map(float,JerkIndex_list_condition_1_left))
-    JerkIndex_list_condition_2_left = list(map(float,JerkIndex_list_condition_2_left))
-    JerkIndex_list_condition_3_left = list(map(float,JerkIndex_list_condition_3_left))
+# ----- for left arm ----- # 
+JerkIndex_list_condition_1_left = list(map(float,JerkIndex_list_condition_1_left))
+JerkIndex_list_condition_2_left = list(map(float,JerkIndex_list_condition_2_left))
+JerkIndex_list_condition_3_left = list(map(float,JerkIndex_list_condition_3_left))
 
-    # ----- for right arm ----- #
-    JerkIndex_list_condition_1_right = list(map(float,JerkIndex_list_condition_1_right))
-    JerkIndex_list_condition_2_right = list(map(float,JerkIndex_list_condition_2_right))
-    JerkIndex_list_condition_3_right = list(map(float,JerkIndex_list_condition_3_right))
+# ----- for right arm ----- #
+JerkIndex_list_condition_1_right = list(map(float,JerkIndex_list_condition_1_right))
+JerkIndex_list_condition_2_right = list(map(float,JerkIndex_list_condition_2_right))
+JerkIndex_list_condition_3_right = list(map(float,JerkIndex_list_condition_3_right))
 
-    # ----- for dual-arm ----- #
-    JerkIndex_list_condition_1_dualarm = [(x + y) / 2 for x, y in zip(JerkIndex_list_condition_1_left, JerkIndex_list_condition_1_right)]
-    JerkIndex_list_condition_2_dualarm = [(x + y) / 2 for x, y in zip(JerkIndex_list_condition_2_left, JerkIndex_list_condition_2_right)]
-    JerkIndex_list_condition_3_dualarm = [(x + y) / 2 for x, y in zip(JerkIndex_list_condition_3_left, JerkIndex_list_condition_3_right)]
+# ----- for dual-arm ----- #
+JerkIndex_list_condition_1_dualarm = [(x + y) / 2 for x, y in zip(JerkIndex_list_condition_1_left, JerkIndex_list_condition_1_right)]
+JerkIndex_list_condition_2_dualarm = [(x + y) / 2 for x, y in zip(JerkIndex_list_condition_2_left, JerkIndex_list_condition_2_right)]
+JerkIndex_list_condition_3_dualarm = [(x + y) / 2 for x, y in zip(JerkIndex_list_condition_3_left, JerkIndex_list_condition_3_right)]
 
-    print(JerkIndex_list_condition_1_left)
-    print(JerkIndex_list_condition_2_left)
-    print(JerkIndex_list_condition_3_left)
-    print(JerkIndex_list_condition_1_right)
-    print(JerkIndex_list_condition_2_right)
-    print(JerkIndex_list_condition_3_right)
-    print(JerkIndex_list_condition_1_dualarm) 
-    print(JerkIndex_list_condition_2_dualarm)
-    print(JerkIndex_list_condition_3_dualarm)
+# print(JerkIndex_list_condition_1_left)
+# print(JerkIndex_list_condition_2_left)
+# print(JerkIndex_list_condition_3_left)
+# print(JerkIndex_list_condition_1_right)
+# print(JerkIndex_list_condition_2_right)
+# print(JerkIndex_list_condition_3_right)
+print(JerkIndex_list_condition_1_dualarm) 
+print(JerkIndex_list_condition_2_dualarm)
+print(JerkIndex_list_condition_3_dualarm)
+print(len(JerkIndex_list_condition_1_dualarm))
+print(len(JerkIndex_list_condition_2_dualarm))
+print(len(JerkIndex_list_condition_3_dualarm))
+
+JerkIndex_list_condition_1_dualarm_average = []
+JerkIndex_list_condition_2_dualarm_average = []
+JerkIndex_list_condition_3_dualarm_average = []
+
+for i in range(4):
+    # 条件1，1組目，練習，1人目のdataがとんでいるため，2-5回目のみで計算
+    i = 5*i
+    if i == 0:
+        average = sum(JerkIndex_list_condition_1_dualarm[i:i+4])/4
+    else:
+        average = sum(JerkIndex_list_condition_1_dualarm[i-1:i+4])/5
+    JerkIndex_list_condition_1_dualarm_average.append(average)
+
+for i in range(8):
+    # 条件2，2組目，練習，2人目,1回目のdataがとんでいるため，2-5回目のみで計算
+    i = 5*i
+    if i == 25:
+        average = sum(JerkIndex_list_condition_2_dualarm[i:i+4])/4
+    elif i >= 26:
+        average = sum(JerkIndex_list_condition_2_dualarm[i-1:i+4])/5
+    else:
+        average = sum(JerkIndex_list_condition_2_dualarm[i:i+5])/5        
+    JerkIndex_list_condition_2_dualarm_average.append(average)
+
+for i in range(12):
+    i = 5*i
+    average = sum(JerkIndex_list_condition_3_dualarm[i:i+5])/5
+    JerkIndex_list_condition_3_dualarm_average.append(average)
+
+print(JerkIndex_list_condition_1_dualarm_average)
+print(JerkIndex_list_condition_2_dualarm_average)
+print(JerkIndex_list_condition_3_dualarm_average)

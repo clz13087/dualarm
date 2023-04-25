@@ -51,7 +51,7 @@ class Box:
                     medianprops=dict(color='black', linewidth=1),  # 中央値の線の設定
                     whiskerprops=dict(color='black', linewidth=1),  # ヒゲの線の設定
                     capprops=dict(color='black', linewidth=1),  # ヒゲの先端の線の設定
-                    flierprops=dict(markeredgecolor='black', markeredgewidth=1)  # 外れ値の設定
+                    flierprops=dict(markeredgecolor='black', markeredgewidth=0)  # 外れ値の設定
                     )
 
         # ----- boxの色のリスト ----- #
@@ -71,7 +71,7 @@ class Box:
         plt.xlabel('Condition')
         plt.ylabel(ylabel)
         plt.setp(ax.get_xticklabels(), rotation=0) #labelsが重なった時角度変更
-        # plt.ylim(0,0.50*10**14)
+        plt.ylim(0,0.50*10**14)
 
         # ax.set(ylabel=r'$log_{10}Jerk Index$')
         plt.show()
