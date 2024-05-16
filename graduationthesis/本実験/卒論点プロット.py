@@ -15,7 +15,7 @@ mode = 3
 # ----- x座標 ----- #
 # dat = fileIO.Read('主体感絶対.csv', ',')
 # dat = fileIO.Read('主体感相対.csv', ',')
-# dat = fileIO.Read('tasktime絶対プロット.csv', ',')
+dat = fileIO.Read('tasktime絶対プロット.csv', ',')
 # dat = fileIO.Read('Jerk絶対プロット.csv', ',')
 # dat = fileIO.Read('シンクロparticipant.csv', ',')
 # dat = fileIO.Read('tasktime練習.csv', ',')
@@ -27,7 +27,7 @@ mode = 3
 # dat = fileIO.Read('所有感相対.csv', ',')
 # dat = fileIO.Read('操作性絶対.csv', ',')
 # dat = fileIO.Read('操作性相対.csv', ',')
-dat = fileIO.Read('FoC絶対.csv', ',')
+# dat = fileIO.Read('FoC絶対.csv', ',')kore
 # dat = fileIO.Read('FoC相対.csv', ',')
 # dat = fileIO.Read('FoC to Control Rate.csv', ',')
 # dat = fileIO.Read('操作量.csv', ',')
@@ -54,7 +54,7 @@ OP3_x = [addr for addr in dat if 'OP3' in addr[0]]
 # dat = fileIO.Read('tasktime絶対プロット.csv', ',')
 # dat = fileIO.Read('Jerk絶対プロット.csv', ',')
 # dat = fileIO.Read('シンクロparticipant.csv', ',')
-# dat = fileIO.Read('tasktime練習.csv', ',')
+dat = fileIO.Read('tasktime練習.csv', ',')
 # dat = fileIO.Read('Jerk練習.csv', ',')
 # dat = fileIO.Read('tasktime相対.csv', ',')
 # dat = fileIO.Read('NASATLX絶対.csv', ',')
@@ -66,7 +66,7 @@ OP3_x = [addr for addr in dat if 'OP3' in addr[0]]
 # dat = fileIO.Read('FoC絶対.csv', ',')
 # dat = fileIO.Read('FoC相対.csv', ',')
 # dat = fileIO.Read('FoC to Control Rate.csv', ',')
-dat = fileIO.Read('操作量.csv', ',')
+# dat = fileIO.Read('操作量.csv', ',')kore
 # dat = fileIO.Read('連帯感.csv', ',')
 
 # dat = fileIO.Read('tasktime絶対.csv', ',')
@@ -121,9 +121,9 @@ if mode == 3:
     # ax.scatter(OP1_x, OP1_y, c='olivedrab', label='1')
     # ax.scatter(OP2_x, OP2_y, c='steelblue', label='2')
     # ax.scatter(OP3_x, OP3_y, c='darkorange', label='3')
-    ax.scatter(OP1_x, OP1_y, s=100, c="black", alpha=1, linewidths=0, edgecolors="black", label='1') 
-    ax.scatter(OP2_x, OP2_y, s=100, c="gray", alpha=1, linewidths=0, edgecolors="gray", label='2') 
-    ax.scatter(OP3_x, OP3_y, s=100, c="darkorange", alpha=1, linewidths=0, edgecolors="darkorange", label='3') 
+    ax.scatter(OP1_x, OP1_y, s=100, c="white", alpha=1, edgecolors="k", label='1') 
+    ax.scatter(OP2_x, OP2_y, s=100, c="white", alpha=1, edgecolors="k", label='2', marker="s") 
+    ax.scatter(OP3_x, OP3_y, s=100, c="white", alpha=1, edgecolors="k", label='3', marker="^") 
     # plt.text(0.9, 0.1, f"r = {correlation:.3f}", ha="right", va="top", transform=plt.gca().transAxes)
 
     # 軸のタイトルや凡例などの設定
@@ -132,8 +132,8 @@ if mode == 3:
     ax.set_ylabel(ylabel)
     # plt.legend(loc='center left', bbox_to_anchor=(1., .5))
     plt.legend(loc='lower center', bbox_to_anchor=(0.5, 1.03), ncol=3)
-    plt.ylim(0,)
-    plt.xlim(0,)
+    plt.ylim(0,60)
+    plt.xlim(0,60)
 
     # グラフの表示
     plt.show()
