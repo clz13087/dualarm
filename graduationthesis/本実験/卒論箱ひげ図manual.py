@@ -22,7 +22,7 @@ mode = 3
 # dat = fileIO.Read('主体感絶対.csv', ',')
 # dat = fileIO.Read('主体感相対.csv', ',')
 
-dat = fileIO.Read('tasktime絶対.csv', ',')
+# dat = fileIO.Read('tasktime絶対.csv', ',')
 # dat = fileIO.Read('tasktime相対.csv', ',')
 
 # dat = fileIO.Read('NASATLX絶対.csv', ',')
@@ -34,7 +34,7 @@ dat = fileIO.Read('tasktime絶対.csv', ',')
 # dat = fileIO.Read('操作性絶対.csv', ',')
 # dat = fileIO.Read('操作性相対.csv', ',')
 
-# dat = fileIO.Read('FoC絶対.csv', ',')
+dat = fileIO.Read('FoC絶対.csv', ',')
 # dat = fileIO.Read('FoC相対.csv', ',')
 
 # dat = fileIO.Read('FoC to Control Rate.csv', ',')
