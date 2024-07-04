@@ -1,3 +1,4 @@
+from turtle import color
 from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
 import numpy as np
@@ -15,7 +16,7 @@ after_folder = base_folder + 'beginnerdata/'
 conditions = ['模倣', '融合']
 subjects = {
     '模倣': ['sugata', 'tsuruoka'],
-    '融合': ['konishi', 'yuto']
+    '融合': ['konishi', 'taisei']
 }
 
 # データを格納するための空の辞書
@@ -116,14 +117,15 @@ data = {
 data_list = [data['模倣'], data['融合']]
 
 # 箱ひげ図の作成
-plt.figure(figsize=(8, 6))
-plt.boxplot(data_list, labels=['模倣', '融合'], showfliers=False)
+plt.figure(figsize=(4, 3))
+plt.boxplot(data_list, labels=['模倣', '融合'], showfliers=False, medianprops = dict(color='k', linewidth = 1))
 
 # 軸のラベルを設定
-plt.xlabel('条件')
-plt.ylabel('比')
-plt.title('模倣と融合の箱ひげ図')
+# plt.xlabel('条件')
+plt.ylabel('正解との差の練習前後の比')
+# plt.title('模倣と融合の箱ひげ図')
 plt.savefig('/Users/sanolab/miniforge3/envs/test/RSJ2024/fig/diff.pdf')
+plt.savefig('/Users/sanolab/miniforge3/envs/test/RSJ2024/fig/diff.png')
 
 # グラフの表示
 plt.show()

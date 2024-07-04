@@ -4,9 +4,9 @@ import numpy as np
 import pandas as pd
 import glob
 
-file_expert = glob.glob('/Users/sanolab/this mac/大学/研究室/M2/RSJ2024/experiment/expertdata/2/Transform_Participant_2*')
-file_before = glob.glob('/Users/sanolab/this mac/大学/研究室/M2/RSJ2024/experiment/beginnerdata/yuto/before/2/Transform_Participant_2*')
-file_after = glob.glob('/Users/sanolab/this mac/大学/研究室/M2/RSJ2024/experiment/beginnerdata/yuto/after/2/Transform_Participant_2*')
+file_expert = glob.glob('/Users/sanolab/this mac/大学/研究室/M2/RSJ2024/experiment/expertdata/1/Transform_Participant_2*')
+file_before = glob.glob('/Users/sanolab/this mac/大学/研究室/M2/RSJ2024/experiment/beginnerdata/konishi/before/1/Transform_Participant_2*')
+file_after = glob.glob('/Users/sanolab/this mac/大学/研究室/M2/RSJ2024/experiment/beginnerdata/konishi/after/1/Transform_Participant_2*')
 for name in file_expert:
     dat_expert = pd.read_csv(name)
 for name in file_before:
