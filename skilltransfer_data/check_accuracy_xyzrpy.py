@@ -2,8 +2,8 @@ import pandas as pd
 import glob
 from matplotlib import pyplot as plt
 
-file_user = glob.glob('/Users/sanolab/this mac/大学/研究室/M2/check_accuracy/19回目/Transform_Participant_2*')
-file_robot = glob.glob('/Users/sanolab/this mac/大学/研究室/M2/check_accuracy/19回目/OtherRigidBody_2*')
+file_user = glob.glob('/Users/sanolab/this mac/大学/研究室/M2/RSJ2024/experiment/expertdata/1/Transform_Participant_2*')
+file_robot = glob.glob('/Users/sanolab/this mac/大学/研究室/M2/RSJ2024/experiment/expertdata/1/OtherRigidBody*')
 for name in file_user:
     dat_user = pd.read_csv(name)
 for name in file_robot:
