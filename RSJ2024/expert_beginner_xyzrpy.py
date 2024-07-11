@@ -2,9 +2,9 @@ import pandas as pd
 import glob
 from matplotlib import pyplot as plt
 
-file_expert = glob.glob('/Users/sanolab/this mac/大学/研究室/M2/RSJ2024/experiment/expertdata/1/Transform_Participant_2*')
-file_before = glob.glob('/Users/sanolab/this mac/大学/研究室/M2/RSJ2024/experiment/beginnerdata/taisei/before/1/Transform_Participant_2*')
-file_after = glob.glob('/Users/sanolab/this mac/大学/研究室/M2/RSJ2024/experiment/beginnerdata/taisei/after/1/Transform_Participant_2*')
+file_expert = glob.glob('/Users/sanolab/this mac/大学/研究室/M2/RSJ2024/experiment/expertdata/4/Transform_Participant_2*')
+file_before = glob.glob('/Users/sanolab/this mac/大学/研究室/M2/RSJ2024/experiment/beginnerdata/sugata/before/4/Transform_Participant_2*')
+file_after = glob.glob('/Users/sanolab/this mac/大学/研究室/M2/RSJ2024/experiment/beginnerdata/sugata/after/4/Transform_Participant_2*')
 for name in file_expert:
     dat_expert = pd.read_csv(name)
 for name in file_before:

@@ -5,6 +5,7 @@ import numpy as np
 import pandas as pd
 import glob
 import japanize_matplotlib
+from fastdtw import fastdtw
 import seaborn as sns
 
 # ファイルパスの設定
@@ -50,7 +51,10 @@ for condition in subjects:
                 data[condition].append({'subject': subject, 'practice': 'after', 'task': f'{task}', 'data': dat_after})
 
 
-def calculate_distance_ratio(dat_expert, dat_before, dat_after):
+def euclidean_distance_3d(practice, expert):
+    return np.sqrt((practice[0] - expert[0]) ** 2 + (practice[1] - expert[1]) ** 2 + (practice[2] - expert[2]) ** 2)
+
+def calculate_dtw_ratio(dat_expert, dat_before, dat_after):
     # 各データセットのx, y, zのデータを取得
     x_expert, y_expert, z_expert = dat_expert['x'], dat_expert['y'], dat_expert['z']
     x_before, y_before, z_before = dat_before['x'], dat_before['y'], dat_before['z']
@@ -61,26 +65,13 @@ def calculate_distance_ratio(dat_expert, dat_before, dat_after):
     before_data = np.array([x_before, y_before, z_before]).T
     after_data = np.array([x_after, y_after, z_after]).T
 
-    def get_representative_point(data):
-        idx = np.argmax(np.abs(data[:, 0]))
-        return data[idx]
-
-    # 各データセットの代表点を取得
-    expert_point = get_representative_point(expert_data)
-    before_point = get_representative_point(before_data)
-    after_point = get_representative_point(after_data)
-
-    # 距離を計算
-    def calculate_distance(point1, point2):
-        return np.linalg.norm(point1 - point2)
-
-    distance_before_expert = calculate_distance(before_point, expert_point)
-    distance_after_expert = calculate_distance(after_point, expert_point)
+    distance_before_expert, path_before_expert = fastdtw(before_data, expert_data, dist=euclidean_distance_3d)
+    distance_after_expert, path_after_expert = fastdtw(after_data, expert_data, dist=euclidean_distance_3d)
 
     # 無次元化
-    distance_ratio =   distance_after_expert / distance_before_expert
+    dtw_ratio =  distance_after_expert / distance_before_expert
 
-    return distance_before_expert, distance_after_expert, distance_ratio
+    return distance_before_expert, distance_after_expert, dtw_ratio
 
 
 imitation = []
@@ -98,14 +89,14 @@ for condition in conditions:
             after_data = [item for item in data[condition] if item['subject'] == f'{subject}' and item['task'] == f'{task}' and item['practice'] == 'after'][0]
             
             # calculate_dimensionless_ratio 関数に渡して無次元比を計算
-            distance_before_expert, distance_after_expert, distance_ratio = calculate_distance_ratio(expert_data['data'], before_data['data'], after_data['data'])
+            distance_before_expert, distance_after_expert, dtw_ratio = calculate_dtw_ratio(expert_data['data'], before_data['data'], after_data['data'])
             if condition == '模倣':
-                imitation.append(distance_ratio)
+                imitation.append(dtw_ratio)
             elif condition == '融合':
-                integration.append(distance_ratio)
+                integration.append(dtw_ratio)
             
             # 結果を出力
-            print(f'  task {task}: ratio = {distance_ratio}')
+            print(f'  task {task}: dtw ratio = {dtw_ratio}')
 
 # 箱ひげ図とデータポイントのプロット
 plt.figure(figsize=(4, 3))
@@ -121,10 +112,9 @@ sns.boxplot(x='Condition', y='Ratio', data=df, showfliers=False, boxprops=dict(f
 # sns.stripplot(x='Condition', y='Ratio', data=df, jitter=True, color='black', dodge=True)
 
 # 軸のラベルを設定
-plt.ylabel('折り返し点の練習前後の比')
 plt.xlabel('')
+plt.ylabel('DTWの練習前後の比')
 
-# ファイルに保存
-plt.savefig('/Users/sanolab/miniforge3/envs/test/RSJ2024/fig/diff.pdf')
-plt.savefig('/Users/sanolab/miniforge3/envs/test/RSJ2024/fig/diff.png')
-plt.savefig('/Users/sanolab/this mac/大学/研究室/M2/RSJ2024/tex/2024j_tex_tsugumi/fig/diff.pdf')
+plt.savefig('/Users/sanolab/miniforge3/envs/test/RSJ2024/fig/dtw.pdf')
+plt.savefig('/Users/sanolab/miniforge3/envs/test/RSJ2024/fig/dtw.png')
+plt.savefig('/Users/sanolab/this mac/大学/研究室/M2/RSJ2024/tex/2024j_tex_tsugumi/fig/dtw.pdf')
