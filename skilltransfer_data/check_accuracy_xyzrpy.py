@@ -2,8 +2,8 @@ import pandas as pd
 import glob
 from matplotlib import pyplot as plt
 
-file_user = glob.glob('/Users/sanolab/this mac/大学/研究室/M2/RSJ2024/experiment/expertdata/1/Transform_Participant_2*')
-file_robot = glob.glob('/Users/sanolab/this mac/大学/研究室/M2/RSJ2024/experiment/expertdata/1/OtherRigidBody*')
+file_user = glob.glob('/Users/sanolab/this mac/大学/研究室/M2/check_accuracy/7:30/4/Transform_Robot_2*')
+file_robot = glob.glob('/Users/sanolab/this mac/大学/研究室/M2/check_accuracy/7:30/4/OtherRigidBody_2*')
 for name in file_user:
     dat_user = pd.read_csv(name)
 for name in file_robot:
@@ -94,4 +94,5 @@ axes[2,1].legend()
 # plt.xlim(0,1.01)
 
 # グラフの表示
+# plt.savefig(f'/Users/sanolab/this mac/大学/研究室/M2/check_accuracy/7:30/fig_xyzrpy/4')
 plt.show()
