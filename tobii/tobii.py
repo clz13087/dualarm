@@ -134,13 +134,14 @@ def main():
         print("アイトラッカーが見つかりませんでした。接続を確認してください。")
         return
     
-    print("接続されているアイトラッカー:")
     for idx, tracker in enumerate(found_eyetrackers):
-        print(f"{idx}: {tracker.address}, {tracker.device_name}, {tracker.model}")
+        print('------------------------------------------')
+        print(f"Connected eye tracker: {idx}, {tracker.address}, {tracker.model}")
 
     # 最初のアイトラッカーを使用
     eye_tracker = found_eyetrackers[0]
-    print(f"使用するアイトラッカー: {eye_tracker.device_name} ({eye_tracker.address})")
+    print(f"Eye tracker to be used: {eye_tracker.address}")
+    print('------------------------------------------')
 
     # 別スレッドで視線データのサブスクライブを開始
     gaze_thread = threading.Thread(target=gaze_data_thread, args=(eye_tracker,))
