@@ -14,18 +14,18 @@ logging.basicConfig(level=logging.INFO)
 
 # 動画ファイルのパス
 # video_path = glob.glob("/Users/sanolab/this mac/大学/研究室/M2/SI2024/expertdata/gaze/1-7/*expert_video_2*.mp4")[0]
-video_path = glob.glob("/Users/sanolab/this mac/大学/研究室/M2/SI2024/expertdata/gaze/8-37/*expert_video_30*.mp4")[0]
+# video_path = glob.glob("/Users/sanolab/this mac/大学/研究室/M2/SI2024/expertdata/gaze/8-37/*expert_video_30*.mp4")[0]
 # video_path = glob.glob("/Users/sanolab/this mac/大学/研究室/M2/SI2024/expertdata/gaze/1-7/*beginner_video_5*.mp4")[0]
 # video_path = glob.glob("/Users/sanolab/this mac/大学/研究室/M2/SI2024/expertdata/gaze/8-37/*beginner_video_30*.mp4")[0]
 
-# video_path = glob.glob("/Users/sanolab/this mac/大学/研究室/M2/SI2024/expertdata/gaze/tsugumi/1/*expert_video_1*.mp4")[0]
+video_path = glob.glob("/Users/sanolab/this mac/大学/研究室/M2/SI2024/tsugumidata/expert/8/*beginner_video_1*.mp4")[0]
 
 # 保存先のパス
-dirPath = "/Users/sanolab/this mac/大学/研究室/M2/SI2024/expertdata/gaze/tsugumi/"
+dirPath = "/Users/sanolab/this mac/大学/研究室/M2/SI2024/tsugumidata/beginner/other"
 os.makedirs(dirPath, exist_ok=True)
 
 # メインループのFPS（例: 14.6FPS）
-desired_fps = 15
+desired_fps = 14.6
 delay = int(1000 / desired_fps)
 
 # 録画のfps
@@ -35,7 +35,7 @@ record_fps = 10
 display_width, display_height = 1280, 800
 
 # 透過率(録画の割合)
-alpha = 0
+alpha = 0.5
 
 # ズーム倍率
 scale_factor = 2  # 倍率を指定（例: 2倍）

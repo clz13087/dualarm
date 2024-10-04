@@ -9,7 +9,7 @@ import math
 import socket
 
 # 設定
-dirPath = "/Users/sanolab/this mac/大学/研究室/M2/SI2024/tsugumidata/expert"
+dirPath = "/Users/sanolab/this mac/大学/研究室/M2/SI2024/tsugumidata/expert/8"
 os.makedirs(dirPath, exist_ok=True)
 
 # MacBookの解像度
