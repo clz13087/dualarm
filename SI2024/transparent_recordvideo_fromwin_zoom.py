@@ -32,7 +32,7 @@ delay = int(1000 / desired_fps)
 record_fps = 10
 
 # Macのディスプレイサイズに合わせる（仮に1280x800に設定）
-display_width, display_height = 1280, 800
+display_width, display_height = 1280, 720
 
 # 透過率(録画の割合)
 alpha = 0.5
