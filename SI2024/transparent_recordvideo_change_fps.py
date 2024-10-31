@@ -43,22 +43,44 @@ udp_sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 udp_sock.bind(('133.68.108.26', 8000))
 
 # 差分データを受信しFPSを調整するスレッド関数
+# def receive_diff_data():
+#     global desired_fps, delay, s_flag
+#     while True:
+#         try:
+#             # 差分データを受信
+#             udp_data, addr = udp_sock.recvfrom(1024)
+#             print(f"Received message: {udp_data} from {addr}")
+
+#             if udp_data == b's':
+#                 s_flag = 1
+#             else:
+#                 difference = float(udp_data.decode())
+
+#             # 受信した差分に基づいてFPSを変更 (14.6〜7.3)
+#             desired_fps = 14.6 - (difference / 0.03) * (14.6 - 7.3)
+#             delay = int(1000 / desired_fps)
+
+#         except BlockingIOError:
+#             pass  # データがない場合はスキップ
+#         time.sleep(0.01)  # 高頻度でのループを防ぐ
+
+lock = threading.Lock()
+
 def receive_diff_data():
-    global desired_fps, delay, udp_data
+    global desired_fps, delay, s_flag
     while True:
         try:
-            # 差分データを受信
             udp_data, addr = udp_sock.recvfrom(1024)
-            print(f"Received message: {udp_data} from {addr}")
-            difference = float(udp_data.decode())
-
-            # 受信した差分に基づいてFPSを変更 (14.6〜7.3)
-            desired_fps = 14.6 - (difference / 0.03) * (14.6 - 7.3)
-            delay = int(1000 / desired_fps)
-
+            with lock:  # ロックを取得
+                if udp_data == b's':
+                    s_flag = 1
+                else:
+                    difference = float(udp_data.decode())
+                    desired_fps = 14.6 - (difference / 0.03) * (14.6 - 12)
+                    delay = int(1000 / desired_fps)
         except BlockingIOError:
-            pass  # データがない場合はスキップ
-        time.sleep(0.01)  # 高頻度でのループを防ぐ
+            pass
+        time.sleep(0.01)
 
 # スレッド開始
 diff_thread = threading.Thread(target=receive_diff_data)
@@ -102,14 +124,18 @@ video_writer = None
 
 # sキーのトグル管理用
 play_video = False
+s_flag = 0
 
 # プログラムのメインループ
 while True:
     # キー入力の処理
     key = cv2.waitKey(delay) & 0xFF  # 指定されたFPSに基づいた待機時間
 
-    if udp_data == b's':
+    if s_flag == 1:
         key = ord('s')
+        s_flag = 0
+    else:
+        pass
 
     # try:
     #     # ソケットで受信
@@ -149,6 +175,7 @@ while True:
             # 録画停止と動画リセット
             is_recording = False
             play_video = False
+            s_flag = 0
             video_writer.release()
             video.set(cv2.CAP_PROP_POS_FRAMES, 0)  # 動画を最初に戻す
             logging.info(f"録画停止: {beginner_video_path}")
@@ -174,7 +201,6 @@ while True:
 
             # desired_fps に基づいてビデオフレーム間隔を調整
             time.sleep(1.0 / desired_fps)  # フレームの間隔をdesired_fpsに合わせる
-            print(desired_fps)
         else:
             play_video = False  # 動画が終わったら再生停止
             video.set(cv2.CAP_PROP_POS_FRAMES, 0)  # 動画を最初に戻す
@@ -192,7 +218,7 @@ while True:
     if elapsed_time > 1.0:  # 1秒ごとにFPSを表示
         fps = frame_count / elapsed_time
         fps_list.append(fps)
-        # logging.info(f"FPS: {fps:.2f}")
+        logging.info(f"FPS: {fps:.2f}")
         frame_count = 0
         start_time = time.time()
 
