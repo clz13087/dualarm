@@ -13,11 +13,6 @@ logging.basicConfig(level=logging.INFO)
 # -------------------------------------------------------- 　入力　　-----------------------------------------------------------------
 
 # 動画ファイルのパス
-# video_path = glob.glob("/Users/sanolab/this mac/大学/研究室/M2/SI2024/expertdata/gaze/1-7/*expert_video_2*.mp4")[0]
-# video_path = glob.glob("/Users/sanolab/this mac/大学/研究室/M2/SI2024/expertdata/gaze/8-37/*expert_video_30*.mp4")[0]
-# video_path = glob.glob("/Users/sanolab/this mac/大学/研究室/M2/SI2024/expertdata/gaze/1-7/*beginner_video_5*.mp4")[0]
-# video_path = glob.glob("/Users/sanolab/this mac/大学/研究室/M2/SI2024/expertdata/gaze/8-37/*beginner_video_30*.mp4")[0]
-
 video_path = glob.glob("/Users/sanolab/this mac/大学/研究室/M2/SI2024/tsugumidata/expert/8/*beginner_video_1*.mp4")[0]
 
 # 保存先のパス
@@ -25,7 +20,8 @@ dirPath = "/Users/sanolab/this mac/大学/研究室/M2/SI2024/tsugumidata/beginn
 os.makedirs(dirPath, exist_ok=True)
 
 # メインループのFPS（例: 14.6FPS）
-desired_fps = 14.6
+# desired_fps = 14.6
+desired_fps = 7.3
 delay = int(1000 / desired_fps)
 
 # 録画のfps
