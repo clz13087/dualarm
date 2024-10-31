@@ -41,7 +41,6 @@ scale_factor = 2  # 倍率を指定（例: 2倍）
 # UDPソケットを設定
 udp_sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 udp_sock.bind(('133.68.108.26', 8000))
-udp_sock.bind(('133.68.108.26', 8001))
 
 # 差分データを受信しFPSを調整するスレッド関数
 def receive_diff_data():
@@ -171,6 +170,7 @@ while True:
 
             # desired_fps に基づいてビデオフレーム間隔を調整
             time.sleep(1.0 / desired_fps)  # フレームの間隔をdesired_fpsに合わせる
+            print(desired_fps)
         else:
             play_video = False  # 動画が終わったら再生停止
             video.set(cv2.CAP_PROP_POS_FRAMES, 0)  # 動画を最初に戻す
@@ -188,7 +188,7 @@ while True:
     if elapsed_time > 1.0:  # 1秒ごとにFPSを表示
         fps = frame_count / elapsed_time
         fps_list.append(fps)
-        logging.info(f"FPS: {fps:.2f}")
+        # logging.info(f"FPS: {fps:.2f}")
         frame_count = 0
         start_time = time.time()
 
