@@ -44,12 +44,13 @@ udp_sock.bind(('133.68.108.26', 8000))
 
 # 差分データを受信しFPSを調整するスレッド関数
 def receive_diff_data():
-    global desired_fps, delay
+    global desired_fps, delay, udp_data
     while True:
         try:
             # 差分データを受信
-            diff_data, addr = udp_sock.recvfrom(1024)
-            difference = float(diff_data.decode())
+            udp_data, addr = udp_sock.recvfrom(1024)
+            print(f"Received message: {udp_data} from {addr}")
+            difference = float(udp_data.decode())
 
             # 受信した差分に基づいてFPSを変更 (14.6〜7.3)
             desired_fps = 14.6 - (difference / 0.03) * (14.6 - 7.3)
@@ -107,15 +108,18 @@ while True:
     # キー入力の処理
     key = cv2.waitKey(delay) & 0xFF  # 指定されたFPSに基づいた待機時間
 
-    try:
-        # ソケットで受信
-        data, addr = udp_sock.recvfrom(1024)
-        print(f"Received message: {data} from {addr}")
-        if data == b's':
-            key = ord('s')  # sキーを押されたとみなす
-    except BlockingIOError:
-        # データが受信できなかった場合はスキップ
-        pass
+    if udp_data == b's':
+        key = ord('s')
+
+    # try:
+    #     # ソケットで受信
+    #     data, addr = udp_sock.recvfrom(1024)
+    #     print(f"Received message: {data} from {addr}")
+    #     if data == b's':
+    #         key = ord('s')  # sキーを押されたとみなす
+    # except BlockingIOError:
+    #     # データが受信できなかった場合はスキップ
+    #     pass
 
     # カメラのフレームを取得
     ret, camera_frame = camera.read()
