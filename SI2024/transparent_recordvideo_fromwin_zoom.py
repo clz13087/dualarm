@@ -20,8 +20,8 @@ dirPath = "/Users/sanolab/this mac/大学/研究室/M2/SI2024/tsugumidata/beginn
 os.makedirs(dirPath, exist_ok=True)
 
 # メインループのFPS（例: 14.6FPS）
-# desired_fps = 14.6
-desired_fps = 7.3
+desired_fps = 14.6
+# desired_fps = 7.3
 delay = int(1000 / desired_fps)
 
 # 録画のfps

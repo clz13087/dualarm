@@ -20,8 +20,8 @@ video_path = glob.glob("/Users/sanolab/this mac/大学/研究室/M2/SI2024/tsugu
 dirPath = "/Users/sanolab/this mac/大学/研究室/M2/SI2024/tsugumidata/beginner/other"
 os.makedirs(dirPath, exist_ok=True)
 
-# メインループのFPS（例: 14.6FPS）
-desired_fps = 14.6
+# メインループのFPS
+desired_fps = 31
 delay = int(1000 / desired_fps)
 
 # 録画のfps
@@ -43,26 +43,6 @@ udp_sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 udp_sock.bind(('133.68.108.26', 8000))
 
 # 差分データを受信しFPSを調整するスレッド関数
-# def receive_diff_data():
-#     global desired_fps, delay, s_flag
-#     while True:
-#         try:
-#             # 差分データを受信
-#             udp_data, addr = udp_sock.recvfrom(1024)
-#             print(f"Received message: {udp_data} from {addr}")
-
-#             if udp_data == b's':
-#                 s_flag = 1
-#             else:
-#                 difference = float(udp_data.decode())
-
-#             # 受信した差分に基づいてFPSを変更 (14.6〜7.3)
-#             desired_fps = 14.6 - (difference / 0.03) * (14.6 - 7.3)
-#             delay = int(1000 / desired_fps)
-
-#         except BlockingIOError:
-#             pass  # データがない場合はスキップ
-#         time.sleep(0.01)  # 高頻度でのループを防ぐ
 
 lock = threading.Lock()
 
@@ -75,8 +55,8 @@ def receive_diff_data():
                 if udp_data == b's':
                     s_flag = 1
                 else:
-                    difference = float(udp_data.decode())
-                    desired_fps = 14.6 - (difference / 0.03) * (14.6 - 12)
+                    robotside_fps = float(udp_data.decode())
+                    desired_fps = ((robotside_fps - 95) * (31 - 12)) / (190 - 95) + 12
                     delay = int(1000 / desired_fps)
         except BlockingIOError:
             pass
@@ -136,16 +116,6 @@ while True:
         s_flag = 0
     else:
         pass
-
-    # try:
-    #     # ソケットで受信
-    #     data, addr = udp_sock.recvfrom(1024)
-    #     print(f"Received message: {data} from {addr}")
-    #     if data == b's':
-    #         key = ord('s')  # sキーを押されたとみなす
-    # except BlockingIOError:
-    #     # データが受信できなかった場合はスキップ
-    #     pass
 
     # カメラのフレームを取得
     ret, camera_frame = camera.read()
