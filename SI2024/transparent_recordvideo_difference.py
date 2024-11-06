@@ -136,7 +136,7 @@ while True:
 
     # ゲージの描画処理
     gauge_width = int((200 - robotside_fps) *12.5)  # 最大200FPSに基づくゲージ
-    difference = (200 - robotside_fps) * 0.8    # differenceのリミット8cm
+    difference = (200 - robotside_fps) * 0.4    # differenceのリミット8cm
     cv2.rectangle(overlay_frame, (10, display_height - 30), (10 + gauge_width, display_height - 10), (0, 255, 0), -1)
     cv2.putText(overlay_frame, f"difference: {difference:.2f}mm", (10, display_height - 40), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 0), 1)
 
