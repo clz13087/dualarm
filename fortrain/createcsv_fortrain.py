@@ -7,7 +7,7 @@ input_base_path = "/Users/sanolab/this mac/大学/研究室/M2/SI2024/tsugumidat
 output_base_path = "/Users/sanolab/this mac/大学/研究室/M2/SI2024/tsugumidata/mocap_fortrain"
 
 # 1から7のフォルダを順に処理
-for i in range(1, 8):
+for i in range(1, 9):
     # フォルダパスの作成
     folder_path = os.path.join(input_base_path, str(i))
     
@@ -41,13 +41,13 @@ for i in range(1, 8):
         "leftx": left_data["x"],
         "lefty": left_data["y"],
         "leftz": left_data["z"],
+        "rightx": right_data["x"],
+        "righty": right_data["y"],
+        "rightz": right_data["z"],
         "leftqx": left_data["qx"],
         "leftqy": left_data["qy"],
         "leftqz": left_data["qz"],
         "leftqw": left_data["qw"],
-        "rightx": right_data["x"],
-        "righty": right_data["y"],
-        "rightz": right_data["z"],
         "rightqx": right_data["qx"],
         "rightqy": right_data["qy"],
         "rightqz": right_data["qz"],
