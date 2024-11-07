@@ -3,11 +3,14 @@ import glob
 import pandas as pd
 
 # 入力パスと出力パス
-input_base_path = "/Users/sanolab/this mac/大学/研究室/M2/SI2024/tsugumidata/mocap"
-output_base_path = "/Users/sanolab/this mac/大学/研究室/M2/SI2024/tsugumidata/mocap_fortrain"
+# input_base_path = "/Users/sanolab/this mac/大学/研究室/M2/SI2024/tsugumidata/mocap"
+# output_base_path = "/Users/sanolab/this mac/大学/研究室/M2/SI2024/tsugumidata/mocap_fortrain"
+input_base_path = "/Users/sanolab/this mac/大学/研究室/M2/SI2024/expertdata/mocap"
+output_base_path = "/Users/sanolab/this mac/大学/研究室/M2/SI2024/expertdata/mocap_fortrain"
+taskcount = 37
 
 # 1から7のフォルダを順に処理
-for i in range(1, 9):
+for i in range(1, taskcount+1):
     # フォルダパスの作成
     folder_path = os.path.join(input_base_path, str(i))
     
