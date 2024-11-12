@@ -13,7 +13,7 @@ logging.basicConfig(level=logging.INFO)
 
 # -------------------------------------------------------- 　入力　　-----------------------------------------------------------------
 # 動画ファイルのパス
-video_path = glob.glob("/Users/sanolab/this mac/大学/研究室/M2/SI2024/tsugumidata/expert/8/*beginner_video_1*.mp4")[0]
+video_path = glob.glob("/Users/sanolab/this mac/大学/研究室/M2/SI2024/tsugumidata/expert_gaze/8/*beginner_video_1*.mp4")[0]
 
 # 保存先のパス
 dirPath = "/Users/sanolab/this mac/大学/研究室/M2/SI2024/tsugumidata/beginner/other4"
