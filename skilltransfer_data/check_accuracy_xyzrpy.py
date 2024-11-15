@@ -25,15 +25,11 @@ roll_robot = dat_robot['roll']
 pitch_robot = dat_robot['pitch']
 yaw_robot = dat_robot['yaw']
 
-x_diff = x_robot - x_user
-roll_diff = roll_robot - roll_user
-
 fig, axes = plt.subplots(3, 2)
 
 # x
 axes[0,0].plot(time_user, x_user, c='darkorange', label='user')
 axes[0,0].plot(time_robot, x_robot, c='dimgray', label='robot')
-# axes[0,0].plot(time_robot, x_diff, c='gray', label='diff')
 axes[0,0].set_xlabel('time[s]')
 axes[0,0].set_ylabel('x[m]')
 axes[0,0].set_title('x')
