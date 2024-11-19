@@ -16,7 +16,7 @@ logging.basicConfig(level=logging.INFO)
 video_path = glob.glob("/Users/sanolab/this mac/大学/研究室/M2/SI2024/tsugumidata/expert_gaze/8/*beginner_video_1*.mp4")[0]
 
 # 保存先のパス
-dirPath = "/Users/sanolab/this mac/大学/研究室/M2/SI2024/tsugumidata/beginner/other4"
+dirPath = "/Users/sanolab/this mac/大学/研究室/M2/SI2024/yamashitadata/12"
 os.makedirs(dirPath, exist_ok=True)
 is_exportdata = False
 
@@ -25,7 +25,7 @@ desired_fps = 10
 robotside_fps = 200
 record_fps = 10
 display_width, display_height = 1280, 720
-alpha = 0.5
+alpha = 0.3
 scale_factor = 2
 
 # UDPソケットを設定
