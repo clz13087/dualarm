@@ -7,6 +7,7 @@ import os
 import socket
 import threading
 import datetime
+import json
 
 # ログ設定
 logging.basicConfig(level=logging.INFO)
@@ -37,7 +38,7 @@ udp_sock.bind(('133.68.108.26', 8000))
 lock = threading.Lock()
 
 def receive_diff_data():
-    global desired_fps, delay, s_flag, robotside_fps
+    global desired_fps, s_flag, robotside_fps, left_diff, right_diff
     while True:
         try:
             udp_data, addr = udp_sock.recvfrom(1024)
@@ -45,9 +46,12 @@ def receive_diff_data():
                 if udp_data == b's':
                     s_flag = 1
                 else:
-                    robotside_fps = float(udp_data.decode())
+                    received_data = json.loads(udp_data.decode())
+                    robotside_fps, left_diff, right_diff = received_data["frameRate"], received_data["left_diff"], received_data["right_diff"]
         except BlockingIOError:
             pass
+        except json.JSONDecodeError as e:
+            logging.error(f"JSON Decode Error: {e}")
 
 # 再生速度の計算とフレームレート固定
 def fix_framerate(process_duration, looptime):
@@ -135,10 +139,56 @@ while True:
         overlay_frame = cv2.addWeighted(zoomed_camera_frame_resized, 1 - alpha, first_frame, alpha, 0)
 
     # ゲージの描画処理
-    gauge_width = int((200 - robotside_fps) *12.5)  # 最大200FPSに基づくゲージ
-    difference = (200 - robotside_fps) * 0.8    # differenceのリミット8cm
-    cv2.rectangle(overlay_frame, (10, display_height - 30), (10 + gauge_width, display_height - 10), (0, 255, 0), -1)
-    cv2.putText(overlay_frame, f"difference: {difference:.2f}mm", (10, display_height - 40), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 0), 1)
+    # gauge_width = int((200 - robotside_fps) *12.5)  # 最大200FPSに基づくゲージ
+    # difference = (200 - robotside_fps) * 0.8    # differenceのリミット8cm
+    # cv2.rectangle(overlay_frame, (10, display_height - 30), (10 + gauge_width, display_height - 10), (0, 255, 0), -1)
+    # cv2.putText(overlay_frame, f"difference: {difference:.2f}mm", (10, display_height - 40), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 0), 1)
+
+    # ゲージの描画処理
+    gauge_max_length = int(display_width / 2)  # 画面の半分がゲージの最大長さ
+    max_value = 0.08
+
+    # 左ゲージの描画
+    left_gauge_length = min(int((left_diff/max_value) * gauge_max_length), gauge_max_length)  # 最大を中央に制限
+    cv2.rectangle(
+        overlay_frame,
+        (10, display_height - 30),  # 左下からスタート
+        (10 + left_gauge_length, display_height - 10),  # ゲージの終点
+        (0, 255, 0),  # 緑色
+        -1
+    )
+
+    # 右ゲージの描画
+    right_gauge_length = min(int((right_diff/max_value) * gauge_max_length), gauge_max_length)  # 最大を中央に制限
+    cv2.rectangle(
+        overlay_frame,
+        (display_width - 10 - right_gauge_length, display_height - 30),  # 右下からスタート
+        (display_width - 10, display_height - 10),  # ゲージの終点
+        (0, 255, 0),  # 緑色
+        -1
+    )
+
+    # 左側ゲージのテキスト描画
+    cv2.putText(
+        overlay_frame,
+        f"Left diff: {left_diff:.2f}",
+        (10, display_height - 40),  # 左下のゲージ近く
+        cv2.FONT_HERSHEY_SIMPLEX,
+        0.6,
+        (255, 255, 255),  # 白色
+        1
+    )
+
+    # 右側ゲージのテキスト描画
+    cv2.putText(
+        overlay_frame,
+        f"Right diff: {right_diff:.2f}",
+        (display_width - 200, display_height - 40),  # 右下のゲージ近く
+        cv2.FONT_HERSHEY_SIMPLEX,
+        0.6,
+        (255, 255, 255),  # 白色
+        1
+    )
 
     # 画面表示
     cv2.imshow('Overlay', overlay_frame)

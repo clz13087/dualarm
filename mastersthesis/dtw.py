@@ -8,9 +8,13 @@ import japanize_matplotlib
 from fastdtw import fastdtw
 import seaborn as sns
 
-file_record = glob.glob('/Users/sanolab/this mac/大学/研究室/M2/SI2024/tsugumidata/mocap/8/Transform_Participant_1*')
-file_before = glob.glob('/Users/sanolab/this mac/大学/研究室/M2/SI2024/yamashitadata/mocap/1/Transform_Participant_1*')
-file_after = glob.glob('/Users/sanolab/this mac/大学/研究室/M2/SI2024/yamashitadata/mocap/10/Transform_Participant_1*')
+file_record = glob.glob('/Users/sanolab/this mac/大学/研究室/M2/SI2024/yamashitadata/fordtw/record/Transform_Robot_1*')
+file_before = glob.glob('/Users/sanolab/this mac/大学/研究室/M2/SI2024/yamashitadata/fordtw/before/Transform_Robot_1*')
+file_after = glob.glob('/Users/sanolab/this mac/大学/研究室/M2/SI2024/yamashitadata/fordtw/after/Transform_Robot_1*')
+
+# file_record = glob.glob('/Users/sanolab/this mac/大学/研究室/M2/SI2024/tsugumidata/mocap/8/Transform_Participant_1*')
+# file_before = glob.glob('/Users/sanolab/this mac/大学/研究室/M2/SI2024/yamashitadata/mocap/1/Transform_Participant_1*')
+# file_after = glob.glob('/Users/sanolab/this mac/大学/研究室/M2/SI2024/yamashitadata/mocap/10/Transform_Participant_1*')
 
 for name in file_record:
     dat_record = pd.read_csv(name)

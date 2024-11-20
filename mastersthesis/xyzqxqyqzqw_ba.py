@@ -12,8 +12,16 @@ def butter_lowpass_filter(data, cutoff=0.1, fs=1.0, order=2):
 
 # ファイルの読み込み
 file_record = glob.glob('/Users/sanolab/this mac/大学/研究室/M2/SI2024/tsugumidata/mocap/8/Transform_Participant_1*')
-file_before = glob.glob('/Users/sanolab/this mac/大学/研究室/M2/SI2024/yamashitadata/mocap/7/Transform_Participant_1*')
-file_after = glob.glob('/Users/sanolab/this mac/大学/研究室/M2/SI2024/yamashitadata/mocap/8/Transform_Participant_1*')
+file_before = glob.glob('/Users/sanolab/this mac/大学/研究室/M2/SI2024/yamashitadata/mocap/10/Transform_Participant_1*')
+file_after = glob.glob('/Users/sanolab/this mac/大学/研究室/M2/SI2024/yamashitadata/mocap/10/Transform_Participant_5*')
+
+# file_record = glob.glob('/Users/sanolab/this mac/大学/研究室/M2/SI2024/yamashitadata/fordtw/record/Transform_Robot_1*')
+# file_before = glob.glob('/Users/sanolab/this mac/大学/研究室/M2/SI2024/yamashitadata/fordtw/before/Transform_Robot_1*')
+# file_after = glob.glob('/Users/sanolab/this mac/大学/研究室/M2/SI2024/yamashitadata/fordtw/before/Transform_Robot_1*')
+
+# file_record = glob.glob('/Users/sanolab/this mac/大学/研究室/M2/SI2024/yamashitadata/fordtw/record/Transform_Participant_1*')
+# file_before = glob.glob('/Users/sanolab/this mac/大学/研究室/M2/SI2024/yamashitadata/fordtw/before/Transform_Participant_1*')
+# file_after = glob.glob('/Users/sanolab/this mac/大学/研究室/M2/SI2024/yamashitadata/fordtw/before/Transform_Participant_5*')
 
 datasets = {"record": None, "before": None, "after": None}
 for key, files in zip(datasets.keys(), [file_record, file_before, file_after]):
@@ -22,6 +30,7 @@ for key, files in zip(datasets.keys(), [file_record, file_before, file_after]):
 
 # フィルタ適用対象のカラム
 columns_to_filter = ["x", "y", "z", "qx", "qy", "qz", "qw", "weightpos"]
+columns_to_filter = ["x", "y", "z", "qx", "qy", "qz", "qw"]
 
 # サンプリング周波数（仮定）とフィルターの設定
 fs = 200.0  # サンプリング周波数 [Hz]
