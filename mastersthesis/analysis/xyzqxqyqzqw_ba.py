@@ -55,6 +55,7 @@ for i, pos in enumerate(positions):
     axes[i, 0].set_xlabel('time [s]')
     axes[i, 0].set_ylabel(f'{pos} [m]')
     axes[i, 0].legend()
+    axes[i, 0].grid()
 
 
 # 姿勢データの描画（2行目）
@@ -65,6 +66,7 @@ for i, ori in enumerate(orientations):
     axes[i, 1].set_xlabel('time [s]')
     axes[i, 1].set_ylabel(f'{ori}')
     axes[i, 1].legend()
+    axes[i, 1].grid()
 
 # ratio
 # axes[3, 0].plot(datasets["record"]["time"], datasets["record"]["weightpos"], c='dimgray', label='record')
