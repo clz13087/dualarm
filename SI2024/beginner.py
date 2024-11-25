@@ -1,3 +1,4 @@
+from wsgiref.simple_server import demo_app
 import cv2
 import numpy as np
 import glob
@@ -71,7 +72,7 @@ def output_fps():
         last_time = current_time
 
 # スレッド開始
-diff_thread = threading.Thread(target=receive_diff_data)
+diff_thread = threading.Thread(target=receive_diff_data, daemon=True)
 diff_thread.start()
 
 # カメラと動画の初期化

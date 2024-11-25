@@ -13,13 +13,13 @@ import logging
 logging.basicConfig(level=logging.INFO)
 
 # -------------------------------------------------------- 　入力　　-----------------------------------------------------------------
-dirPath = "/Users/sanolab/this mac/大学/研究室/M2/SI2024/test/1"
+dirPath = "/Users/sanolab/this mac/大学/研究室/M2/SI2024/test/3"
 os.makedirs(dirPath, exist_ok=True)
 
 MACBOOK_SCREEN_WIDTH = 1280
 MACBOOK_SCREEN_HEIGHT = 720
 
-is_exportdata = False
+is_exportdata = True
 scale_factor = 2  # 倍率を指定（例: 2倍）
 video_fps = 10  # 録画するフレームレート
 desired_fps = 10 #プログラムのfps
@@ -28,19 +28,6 @@ udp_sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 udp_sock.bind(('133.68.108.26', 8000))
 # -----------------------------------------------------------------------------------------------------------------------------------
 
-# スレッド関数で差分データを受信し `robotside_fps` を更新
-lock = threading.Lock()
-
-def receive_diff_data():
-    global s_flag
-    while True:
-        try:
-            udp_data, addr = udp_sock.recvfrom(1024)
-            with lock:  # ロックを取得
-                if udp_data == b's':
-                    s_flag = 1
-        except BlockingIOError:
-            pass
 
 is_recording = False
 recorded_data = []  # (timestamp, gaze_x, gaze_y)
@@ -52,7 +39,19 @@ video_writer_expert = None  # 生の映像
 
 global_gaze_data = None
 gaze_data_lock = threading.Lock()
+s_switch_lock = threading.Lock()
 last_time = time.time()
+
+def receive_s_switch():
+    global s_flag
+    while True:
+        try:
+            udp_data, addr = udp_sock.recvfrom(1024)
+            with s_switch_lock:  # ロックを取得
+                if udp_data == b's':
+                    s_flag = 1
+        except BlockingIOError:
+            pass
 
 # 再生速度の計算とフレームレート固定
 def fix_framerate(process_duration, looptime):
@@ -129,12 +128,11 @@ if not found_eyetrackers:
 
 eye_tracker = found_eyetrackers[0]
 
-gaze_thread = threading.Thread(target=gaze_data_thread, args=(eye_tracker,))
-gaze_thread.daemon = True
+gaze_thread = threading.Thread(target=gaze_data_thread, args=(eye_tracker,), daemon=True)
 gaze_thread.start()
 
-diff_thread = threading.Thread(target=receive_diff_data)
-diff_thread.start()
+s_switch_thread = threading.Thread(target=receive_s_switch, daemon=True)
+s_switch_thread.start()
 
 program_start_time = time.perf_counter()
 frame_count = 0
