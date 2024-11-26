@@ -148,47 +148,15 @@ try:
         # ゲージの描画処理
         gauge_max_length = int(display_width / 2)  # 画面の半分がゲージの最大長さ
 
-        # 左ゲージの描画
+        # ゲージの描画``
         left_gauge_length = min(int((left_diff/max_value) * gauge_max_length), gauge_max_length)  # 最大を中央に制限
-        cv2.rectangle(
-            overlay_frame,
-            (10, display_height - 30),  # 左下からスタート
-            (10 + left_gauge_length, display_height - 10),  # ゲージの終点
-            (0, 255, 0),  # 緑色
-            -1
-        )
-
-        # 右ゲージの描画
+        cv2.rectangle(overlay_frame, (10, display_height - 30), (10 + left_gauge_length, display_height - 10), (0, 255, 0), -1)
         right_gauge_length = min(int((right_diff/max_value) * gauge_max_length), gauge_max_length)  # 最大を中央に制限
-        cv2.rectangle(
-            overlay_frame,
-            (display_width - 10 - right_gauge_length, display_height - 30),  # 右下からスタート
-            (display_width - 10, display_height - 10),  # ゲージの終点
-            (0, 255, 0),  # 緑色
-            -1
-        )
+        cv2.rectangle(overlay_frame, (display_width - 10 - right_gauge_length, display_height - 30), (display_width - 10, display_height - 10), (0, 255, 0), -1)
 
-        # 左側ゲージのテキスト描画
-        cv2.putText(
-            overlay_frame,
-            f"Left diff: {left_diff:.1f}cm",
-            (10, display_height - 40),  # 左下のゲージ近く
-            cv2.FONT_HERSHEY_SIMPLEX,
-            0.6,
-            (255, 255, 255),  # 白色
-            1
-        )
-
-        # 右側ゲージのテキスト描画
-        cv2.putText(
-            overlay_frame,
-            f"Right diff: {right_diff:.1f}cm",
-            (display_width - 200, display_height - 40),  # 右下のゲージ近く
-            cv2.FONT_HERSHEY_SIMPLEX,
-            0.6,
-            (255, 255, 255),  # 白色
-            1
-        )
+        # テキスト描画
+        cv2.putText(overlay_frame, f"Left diff: {left_diff:.1f}cm", (10, display_height - 40), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 255, 255), 1)
+        cv2.putText(overlay_frame, f"Right diff: {right_diff:.1f}cm", (display_width - 200, display_height - 40), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 255, 255), 1)
 
         # 画面表示
         cv2.imshow('Overlay', overlay_frame)
