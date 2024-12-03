@@ -18,7 +18,7 @@ logging.basicConfig(level=logging.INFO)
 video_path = glob.glob("/Users/sanolab/this mac/大学/研究室/M2/SI2024/tsugumidata/expert_gaze/8/*beginner_video_1*.mp4")[0]
 
 # 保存先のパス
-dirPath = "/Users/sanolab/this mac/大学/研究室/M2/10月ゼミ(2024:10:21)/fig"
+dirPath = "/Users/sanolab/this mac/大学/研究室/M2/yasuurademo(2024:12:3)/display"
 os.makedirs(dirPath, exist_ok=True)
 is_exportdata = False
 

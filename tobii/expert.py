@@ -19,10 +19,12 @@ os.makedirs(dirPath, exist_ok=True)
 MACBOOK_SCREEN_WIDTH = 1280
 MACBOOK_SCREEN_HEIGHT = 720
 
-is_exportdata = True
+is_exportdata = False
 scale_factor = 2  # 倍率を指定（例: 2倍）
 video_fps = 10  # 録画するフレームレート
 desired_fps = 10 #プログラムのfps
+
+using_tobii = False
 
 udp_sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 udp_sock.bind(('133.68.108.26', 8000))
@@ -126,10 +128,10 @@ found_eyetrackers = tr.find_all_eyetrackers()
 if not found_eyetrackers:
     print("アイトラッカーが見つかりませんでした。接続を確認してください。")
 
-eye_tracker = found_eyetrackers[0]
-
-gaze_thread = threading.Thread(target=gaze_data_thread, args=(eye_tracker,), daemon=True)
-gaze_thread.start()
+if using_tobii:
+    eye_tracker = found_eyetrackers[0]
+    gaze_thread = threading.Thread(target=gaze_data_thread, args=(eye_tracker,), daemon=True)
+    gaze_thread.start()
 
 s_switch_thread = threading.Thread(target=receive_s_switch, daemon=True)
 s_switch_thread.start()
