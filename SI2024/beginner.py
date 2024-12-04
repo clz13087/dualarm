@@ -27,9 +27,10 @@ desired_fps = 10
 robotside_fps = 200
 record_fps = 10
 display_width, display_height = 1280, 720
-alpha = 0.3
+alpha = 0.5
 scale_factor = 2
 max_value = 10 #cm
+which_camera = 0 #participant:0, robot: 1
 
 # UDPソケットを設定
 udp_sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -76,7 +77,7 @@ diff_thread = threading.Thread(target=receive_diff_data, daemon=True)
 diff_thread.start()
 
 # カメラと動画の初期化
-camera = cv2.VideoCapture(0)
+camera = cv2.VideoCapture(which_camera)
 video = cv2.VideoCapture(video_path)
 video_fps = video.get(cv2.CAP_PROP_FPS)
 
