@@ -1,4 +1,3 @@
-from wsgiref.simple_server import demo_app
 import cv2
 import numpy as np
 import glob
