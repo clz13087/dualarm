@@ -24,7 +24,7 @@ scale_factor = 2  # 倍率を指定（例: 2倍）
 video_fps = 10  # 録画するフレームレート
 desired_fps = 10 #プログラムのfps
 
-using_tobii = False
+using_tobii = True
 
 udp_sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 udp_sock.bind(('133.68.108.26', 8000))

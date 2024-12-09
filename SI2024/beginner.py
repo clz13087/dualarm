@@ -18,7 +18,6 @@ video_path = glob.glob("/Users/sanolab/this mac/大学/研究室/M2/SI2024/tsugu
 
 # 保存先のパス
 dirPath = "/Users/sanolab/this mac/大学/研究室/M2/yasuurademo(2024:12:3)/display"
-os.makedirs(dirPath, exist_ok=True)
 is_exportdata = False
 
 # 基本設定
@@ -35,6 +34,8 @@ which_camera = 0 #participant:0, robot: 1
 udp_sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 udp_sock.bind(('133.68.108.26', 8000))
 # -----------------------------------------------------------------------------------------------------------------------------------
+
+os.makedirs(dirPath, exist_ok=True)
 
 # スレッド関数で差分データを受信し `robotside_fps` を更新
 lock = threading.Lock()
