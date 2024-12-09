@@ -21,6 +21,7 @@ MACBOOK_SCREEN_HEIGHT = 720
 scale_factor = 2  # 倍率を指定（例: 2倍）
 video_fps = 10  # 録画するフレームレート
 desired_fps = 10 #プログラムのfps
+which_camera = 1 #participant:1, robot: 0
 
 using_tobii = True
 is_exportdata = True
@@ -82,7 +83,7 @@ def subscribe_to_gaze_data(eyetracker):
 def gaze_data_thread(eyetracker):
     subscribe_to_gaze_data(eyetracker)
 
-def capture_camera_feed(camera_index=0):
+def capture_camera_feed(camera_index=which_camera):
     cap = cv2.VideoCapture(camera_index)
     return cap
 

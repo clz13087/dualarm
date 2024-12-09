@@ -28,7 +28,7 @@ display_width, display_height = 1280, 720
 alpha = 0.5
 scale_factor = 2
 max_value = 10 #cm
-which_camera = 0 #participant:0, robot: 1
+which_camera = 0 #participant:1, robot: 0
 
 # UDPソケットを設定
 udp_sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
