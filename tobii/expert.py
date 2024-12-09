@@ -13,7 +13,7 @@ import logging
 logging.basicConfig(level=logging.INFO)
 
 # -------------------------------------------------------- 　入力　　-----------------------------------------------------------------
-dirPath = "/Users/sanolab/this mac/大学/研究室/M2/SI2024/test/3"
+dirPath = "/Users/sanolab/this mac/大学/研究室/M2/mastersthesis/data/experiment/expertdata/fujiwara/20241210/display"
 os.makedirs(dirPath, exist_ok=True)
 
 MACBOOK_SCREEN_WIDTH = 1280
