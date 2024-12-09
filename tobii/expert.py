@@ -14,22 +14,22 @@ logging.basicConfig(level=logging.INFO)
 
 # -------------------------------------------------------- 　入力　　-----------------------------------------------------------------
 dirPath = "/Users/sanolab/this mac/大学/研究室/M2/mastersthesis/data/experiment/expertdata/fujiwara/20241210/display"
-os.makedirs(dirPath, exist_ok=True)
 
 MACBOOK_SCREEN_WIDTH = 1280
 MACBOOK_SCREEN_HEIGHT = 720
 
-is_exportdata = False
 scale_factor = 2  # 倍率を指定（例: 2倍）
 video_fps = 10  # 録画するフレームレート
 desired_fps = 10 #プログラムのfps
 
 using_tobii = True
+is_exportdata = True
 
 udp_sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 udp_sock.bind(('133.68.108.26', 8000))
 # -----------------------------------------------------------------------------------------------------------------------------------
 
+os.makedirs(dirPath, exist_ok=True)
 
 is_recording = False
 recorded_data = []  # (timestamp, gaze_x, gaze_y)
@@ -185,7 +185,7 @@ try:
                 logging.info(f"------------------------------------robot stop---------------------------------------------")
 
                 if is_exportdata:
-                    with open(exportPath, 'w', newline='') as csvfile:
+                    with open(gaze_path, 'w', newline='') as csvfile:
                         csv_writer = csv.writer(csvfile)
                         csv_writer.writerow(['timestamp', 'x', 'y'])
                         csv_writer.writerows(recorded_data)
@@ -197,7 +197,7 @@ try:
                         video_writer_expert.release()
                         video_writer_expert = None
 
-                    logging.info(f"Gaze data saved to {exportPath}.")
+                    logging.info(f"Gaze data saved to {gaze_path}.")
                     logging.info(f"expert video saved to {expert_video_path}.")
                     logging.info(f"beginner video saved to {beginner_video_path}.")
 
@@ -208,9 +208,11 @@ try:
                 record_count += 1
                 logging.info(f"------------------------------------robot start--------------------------------------------")
                 if is_exportdata:
-                    exportPath = os.path.join(dirPath, f'gaze_data_{record_count}_{datetime.datetime.now().strftime("%Y%m%d_%H%M%S")}.csv')
-                    beginner_video_path = os.path.join(dirPath, f'beginner_video_{record_count}_{datetime.datetime.now().strftime("%Y%m%d_%H%M%S")}.mp4')
-                    expert_video_path = os.path.join(dirPath, f'expert_video_{record_count}_{datetime.datetime.now().strftime("%Y%m%d_%H%M%S")}.mp4')
+                    exportPath = os.path.join(dirPath, f"{record_count}")
+                    os.makedirs(exportPath, exist_ok=True)
+                    gaze_path = os.path.join(exportPath, f'gaze_data_{record_count}_{datetime.datetime.now().strftime("%Y%m%d_%H%M%S")}.csv')
+                    beginner_video_path = os.path.join(exportPath, f'beginner_video_{record_count}_{datetime.datetime.now().strftime("%Y%m%d_%H%M%S")}.mp4')
+                    expert_video_path = os.path.join(exportPath, f'expert_video_{record_count}_{datetime.datetime.now().strftime("%Y%m%d_%H%M%S")}.mp4')
                     fourcc = cv2.VideoWriter_fourcc(*'mp4v')  # MP4形式用のコーデック
                     video_writer_beginner = cv2.VideoWriter(beginner_video_path, fourcc, video_fps, (MACBOOK_SCREEN_WIDTH, MACBOOK_SCREEN_HEIGHT))
                     video_writer_expert = cv2.VideoWriter(expert_video_path, fourcc, video_fps, (MACBOOK_SCREEN_WIDTH, MACBOOK_SCREEN_HEIGHT))
