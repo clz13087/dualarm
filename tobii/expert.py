@@ -23,8 +23,8 @@ video_fps = 10  # 録画するフレームレート
 desired_fps = 10 #プログラムのfps
 which_camera = 1 #participant:1, robot: 0
 
-using_tobii = True
-is_exportdata = True
+using_tobii = False
+is_exportdata = False
 
 udp_sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 udp_sock.bind(('133.68.108.26', 8000))
