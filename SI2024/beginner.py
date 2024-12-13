@@ -14,7 +14,7 @@ logging.basicConfig(level=logging.INFO)
 
 # -------------------------------------------------------- 　入力　　-----------------------------------------------------------------
 # 動画ファイルのパス
-video_path = glob.glob("/Users/sanolab/this mac/大学/研究室/M2/SI2024/tsugumidata/expert_gaze/8/*beginner_video_1*.mp4")[0]
+video_path = glob.glob("/Users/sanolab/this mac/大学/研究室/M2/mastersthesis/data/experiment/expertdata/display/fujiwara/for_master/*expert_video*.mp4")[0]
 
 # 保存先のパス
 dirPath = "/Users/sanolab/this mac/大学/研究室/M2/yasuurademo(2024:12:3)/display"
@@ -25,10 +25,10 @@ desired_fps = 10
 robotside_fps = 200
 record_fps = 10
 display_width, display_height = 1280, 720
-alpha = 0.5
+alpha = 0.3
 scale_factor = 2
 max_value = 10 #cm
-which_camera = 0 #participant:1, robot: 0
+which_camera = 1 #participant:0, robot: 1
 
 # UDPソケットを設定
 udp_sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -130,7 +130,7 @@ try:
         zoomed_camera_frame_resized = cv2.resize(zoomed_camera_frame, (display_width, display_height))
 
         # 再生速度の計算 (例: robotside_fps を基に再生速度変更)
-        playback_speed = 0.5 + (robotside_fps - 100) * (1 - 0.5) / (200 - 100)
+        playback_speed = 0.25 + (robotside_fps - 50) * (1 - 0.25) / (200 - 50)
         if play_video:
             video_playback_time += (1 / desired_fps) * playback_speed * 1000  # ミリ秒単位で再生位置を更新
             video.set(cv2.CAP_PROP_POS_MSEC, video_playback_time)
@@ -169,6 +169,7 @@ try:
                 is_recording = False
                 left_diff = 0
                 right_diff = 0
+                robotside_fps = 200
                 video_playback_time = 0 if not play_video else video_playback_time
                 video.set(cv2.CAP_PROP_POS_FRAMES, 0)  # 動画を最初に戻す
                 logging.info(f"------------------------------------robot stop---------------------------------------------")
