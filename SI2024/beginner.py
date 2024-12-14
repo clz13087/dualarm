@@ -17,7 +17,7 @@ logging.basicConfig(level=logging.INFO)
 video_path = glob.glob("/Users/sanolab/this mac/大学/研究室/M2/mastersthesis/data/experiment/expertdata/display/fujiwara/for_master/*expert_video*.mp4")[0]
 
 # 保存先のパス
-dirPath = "/Users/sanolab/this mac/大学/研究室/M2/yasuurademo(2024:12:3)/display"
+dirPath = "/Users/sanolab/this mac/大学/研究室/M2/mastersthesis/data/experiment/beginnerdata/display"
 is_exportdata = False
 
 # 基本設定
