@@ -1,3 +1,5 @@
+from tokenize import Name
+from unicodedata import name
 import cv2
 import numpy as np
 import glob
@@ -16,19 +18,36 @@ logging.basicConfig(level=logging.INFO)
 # 動画ファイルのパス
 video_path = glob.glob("/Users/sanolab/this mac/大学/研究室/M2/mastersthesis/data/experiment/expertdata/display/fujiwara/for_master/*expert_video*.mp4")[0]
 
-# 保存先のパス
-dirPath = "/Users/sanolab/this mac/大学/研究室/M2/mastersthesis/data/experiment/beginnerdata/display"
+participant_name = "test"
+condition = "imitation"
+# condition = "body integration"
 is_exportdata = False
+
+# before
+dirPath = f"/Users/sanolab/this mac/大学/研究室/M2/mastersthesis/data/experiment/beginnerdata/display/{condition}/{participant_name}/before"
+alpha = 0
+which_camera = 2
+using_gauge = False
+
+# practice
+# dirPath = f"/Users/sanolab/this mac/大学/研究室/M2/mastersthesis/data/experiment/beginnerdata/display/{condition}/{participant_name}/practice"
+# alpha = 0.3
+# which_camera = 2
+# using_gauge = True
+
+# after
+# dirPath = f"/Users/sanolab/this mac/大学/研究室/M2/mastersthesis/data/experiment/beginnerdata/display/{condition}/{participant_name}/after"
+# alpha = 0
+# which_camera = 2
+# using_gauge = False
 
 # 基本設定
 desired_fps = 10
 robotside_fps = 200
 record_fps = 10
 display_width, display_height = 1280, 720
-alpha = 0.3
 scale_factor = 2
 max_value = 10 #cm
-which_camera = 1 #participant:0, robot: 1
 
 # UDPソケットを設定
 udp_sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -146,18 +165,19 @@ try:
             # 再生が開始される前はfirst_frameを表示
             overlay_frame = cv2.addWeighted(zoomed_camera_frame_resized, 1 - alpha, first_frame, alpha, 0)
 
-        # ゲージの描画処理
-        gauge_max_length = int(display_width / 2)  # 画面の半分がゲージの最大長さ
+        if using_gauge:
+            # ゲージの描画処理
+            gauge_max_length = int(display_width / 2)  # 画面の半分がゲージの最大長さ
 
-        # ゲージの描画``
-        left_gauge_length = min(int((left_diff/max_value) * gauge_max_length), gauge_max_length)  # 最大を中央に制限
-        cv2.rectangle(overlay_frame, (10, display_height - 30), (10 + left_gauge_length, display_height - 10), (0, 255, 0), -1)
-        right_gauge_length = min(int((right_diff/max_value) * gauge_max_length), gauge_max_length)  # 最大を中央に制限
-        cv2.rectangle(overlay_frame, (display_width - 10 - right_gauge_length, display_height - 30), (display_width - 10, display_height - 10), (0, 255, 0), -1)
+            # ゲージの描画``
+            left_gauge_length = min(int((left_diff/max_value) * gauge_max_length), gauge_max_length)  # 最大を中央に制限
+            cv2.rectangle(overlay_frame, (10, display_height - 30), (10 + left_gauge_length, display_height - 10), (0, 255, 0), -1)
+            right_gauge_length = min(int((right_diff/max_value) * gauge_max_length), gauge_max_length)  # 最大を中央に制限
+            cv2.rectangle(overlay_frame, (display_width - 10 - right_gauge_length, display_height - 30), (display_width - 10, display_height - 10), (0, 255, 0), -1)
 
-        # テキスト描画
-        cv2.putText(overlay_frame, f"Left diff: {left_diff:.1f}cm", (10, display_height - 40), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 255, 255), 1)
-        cv2.putText(overlay_frame, f"Right diff: {right_diff:.1f}cm", (display_width - 200, display_height - 40), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 255, 255), 1)
+            # テキスト描画
+            cv2.putText(overlay_frame, f"Left diff: {left_diff:.1f}cm", (10, display_height - 40), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 255, 255), 1)
+            cv2.putText(overlay_frame, f"Right diff: {right_diff:.1f}cm", (display_width - 200, display_height - 40), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 255, 255), 1)
 
         # 画面表示
         cv2.imshow('Overlay', overlay_frame)
