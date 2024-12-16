@@ -24,16 +24,16 @@ condition = "imitation"
 is_exportdata = False
 
 # before
-dirPath = f"/Users/sanolab/this mac/大学/研究室/M2/mastersthesis/data/experiment/beginnerdata/display/{condition}/{participant_name}/before"
-alpha = 0
-which_camera = 2
-using_gauge = False
+# dirPath = f"/Users/sanolab/this mac/大学/研究室/M2/mastersthesis/data/experiment/beginnerdata/display/{condition}/{participant_name}/before"
+# alpha = 0
+# which_camera = 2
+# using_gauge = False
 
 # practice
-# dirPath = f"/Users/sanolab/this mac/大学/研究室/M2/mastersthesis/data/experiment/beginnerdata/display/{condition}/{participant_name}/practice"
-# alpha = 0.3
-# which_camera = 2
-# using_gauge = True
+dirPath = f"/Users/sanolab/this mac/大学/研究室/M2/mastersthesis/data/experiment/beginnerdata/display/{condition}/{participant_name}/practice"
+alpha = 0.3
+which_camera = 1
+using_gauge = True
 
 # after
 # dirPath = f"/Users/sanolab/this mac/大学/研究室/M2/mastersthesis/data/experiment/beginnerdata/display/{condition}/{participant_name}/after"
