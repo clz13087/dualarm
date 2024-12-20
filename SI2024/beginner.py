@@ -18,7 +18,7 @@ logging.basicConfig(level=logging.INFO)
 # 動画ファイルのパス
 video_path = glob.glob("/Users/sanolab/this mac/大学/研究室/M2/mastersthesis/data/experiment/expertdata/display/fujiwara/for_master/*expert_video*.mp4")[0]
 
-participant_name = "kajio"
+participant_name = "shinagawa"
 # condition = "imitation"
 condition = "body integration"
 is_exportdata = True
