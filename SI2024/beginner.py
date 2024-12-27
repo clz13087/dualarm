@@ -18,10 +18,10 @@ logging.basicConfig(level=logging.INFO)
 # 動画ファイルのパス
 video_path = glob.glob("/Users/sanolab/this mac/大学/研究室/M2/mastersthesis/data/experiment/expertdata/display/fujiwara/for_master/*expert_video*.mp4")[0]
 
-participant_name = "obata"
-# condition = "imitation"
-condition = "body integration"
-is_exportdata = True
+participant_name = "test"
+condition = "imitation"
+# condition = "body integration"
+is_exportdata = False
 
 # before
 dirPath = f"/Users/sanolab/this mac/大学/研究室/M2/mastersthesis/data/experiment/beginnerdata/display/{condition}/{participant_name}/before"
@@ -54,7 +54,8 @@ udp_sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 udp_sock.bind(('133.68.108.26', 8000))
 # -----------------------------------------------------------------------------------------------------------------------------------
 
-os.makedirs(dirPath, exist_ok=True)
+if is_exportdata:
+    os.makedirs(dirPath, exist_ok=True)
 
 # スレッド関数で差分データを受信し `robotside_fps` を更新
 lock = threading.Lock()
